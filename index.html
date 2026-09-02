@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BreakFix Lab — learn DevOps by fixing what is broken</title>
+<link rel="stylesheet" href="assets/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='14'>&#128295;</text></svg>">
+</head>
+<body>
+<header class="topbar">
+  <div class="wrap topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">&#9881;</span>
+      <span>BreakFix<span class="brand-dim">Lab</span></span>
+    </a>
+    <div class="topbar-right">
+      <div class="progress-pill" id="globalProgress">0 / 0 solved</div>
+      <button class="btn btn-ghost" id="resetProgress" title="Clear all local progress">Reset progress</button>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <h1>Everything here is broken on purpose.</h1>
+    <p class="hero-sub">
+      You get a task and a set of files that look reasonable. They are not. Follow the instructions,
+      watch it fail the way real systems fail, then debug it back to the expected outcome.
+      Hints and solutions are hidden until you ask for them.
+    </p>
+    <div class="hero-loop">
+      <span>Read the task</span><i>&rarr;</i>
+      <span>Run it</span><i>&rarr;</i>
+      <span class="accent">It breaks</span><i>&rarr;</i>
+      <span>Investigate</span><i>&rarr;</i>
+      <span>Fix</span><i>&rarr;</i>
+      <span>Match expected outcome</span>
+    </div>
+  </section>
+
+  <section class="filters" id="filters">
+    <div class="filter-group">
+      <span class="filter-label">Topic</span>
+      <div class="chips" id="topicChips"></div>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Level</span>
+      <div class="chips" id="levelChips"></div>
+    </div>
+    <div class="filter-group filter-group-right">
+      <label class="toggle">
+        <input type="checkbox" id="hideSolved">
+        <span>Hide solved</span>
+      </label>
+    </div>
+  </section>
+
+  <section id="catalog" class="catalog"></section>
+
+  <section class="footnote">
+    <h2>How to use this</h2>
+    <ul>
+      <li><strong>Do not read the solution first.</strong> The failure is the lesson; the fix is just the receipt.</li>
+      <li><strong>Work in a scratch directory.</strong> Each scenario tells you what to create and where.</li>
+      <li><strong>Self-check.</strong> Every scenario lists an expected outcome with the exact commands and output that prove you fixed it.</li>
+      <li><strong>Prerequisites are yours.</strong> You bring Docker, a cluster, an AWS account, etc. Nothing here provisions or bills anything for you.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="assets/markdown.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>

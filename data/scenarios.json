@@ -1,0 +1,4850 @@
+{
+  "topics": [
+    {
+      "id": "docker",
+      "name": "Docker",
+      "desc": "images, containers, networking, build hygiene"
+    },
+    {
+      "id": "kubernetes",
+      "name": "Kubernetes",
+      "desc": "workloads that will not start, serve, or roll out"
+    },
+    {
+      "id": "git",
+      "name": "Git",
+      "desc": "history you have to repair without losing work"
+    },
+    {
+      "id": "linux",
+      "name": "Linux",
+      "desc": "permissions, ports, services, scheduled jobs"
+    },
+    {
+      "id": "python",
+      "name": "Python for DevOps",
+      "desc": "automation scripts that fail the way real ones do"
+    },
+    {
+      "id": "bash",
+      "name": "Bash",
+      "desc": "shell scripts that lie about succeeding"
+    },
+    {
+      "id": "terraform",
+      "name": "Terraform",
+      "desc": "config and state problems, no cloud account needed"
+    },
+    {
+      "id": "aws",
+      "name": "AWS",
+      "desc": "IAM, networking and identity in your own account"
+    },
+    {
+      "id": "jenkins",
+      "name": "Jenkins",
+      "desc": "pipelines that pass without doing the work"
+    },
+    {
+      "id": "gitops",
+      "name": "GitOps",
+      "desc": "Argo CD reconciliation, drift and sync loops"
+    },
+    {
+      "id": "actions",
+      "name": "GitHub Actions",
+      "desc": "triggers, caching, secrets and supply chain"
+    },
+    {
+      "id": "networking",
+      "name": "Networking",
+      "desc": "DNS, TLS, proxies and the packets in between"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "docker-01-container-exits",
+      "topic": "docker",
+      "level": "beginner",
+      "title": "The container that will not stay running",
+      "summary": "You build the image exactly as instructed and it succeeds. Then the container exits instantly with code 0 and no error message.",
+      "time": "20 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/01-container-exits.md"
+    },
+    {
+      "id": "docker-02-port-unreachable",
+      "topic": "docker",
+      "level": "intermediate",
+      "title": "Container is healthy, port is dead",
+      "summary": "The app logs that it is listening, docker ps shows the port mapped, and curl from your machine still refuses to connect.",
+      "time": "30 min",
+      "prereqs": [
+        "docker",
+        "curl"
+      ],
+      "path": "scenarios/docker/02-port-unreachable.md"
+    },
+    {
+      "id": "docker-03-broken-multistage",
+      "topic": "docker",
+      "level": "expert",
+      "title": "Multi-stage build that ships a 900 MB root container",
+      "summary": "Security rejected the image: it runs as root, weighs almost a gigabyte, and rebuilds everything on every code change. Fix all three without changing the app.",
+      "time": "45 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/03-broken-multistage.md"
+    },
+    {
+      "id": "docker-04-copy-not-found",
+      "topic": "docker",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "COPY failed: file not found, and the file is right there",
+      "summary": "The build cannot find app.py, which is sitting next to the Dockerfile. Docker is looking in the build context, not where you think.",
+      "time": "15 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/04-copy-not-found.md"
+    },
+    {
+      "id": "docker-05-arg-vs-env",
+      "topic": "docker",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The build-time variable that is empty at runtime",
+      "summary": "--build-arg APP_VERSION shows up during the build and is gone in the container. ARG and ENV live in different phases.",
+      "time": "15 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/05-arg-vs-env.md"
+    },
+    {
+      "id": "docker-06-logs-empty",
+      "topic": "docker",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The container is working and docker logs is empty",
+      "summary": "A long job produces no visible output until it exits, and nothing at all if it is killed. Stdout is being buffered.",
+      "time": "15 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/06-logs-empty.md"
+    },
+    {
+      "id": "docker-07-volume-hides-app",
+      "topic": "docker",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The bind mount that deleted your application",
+      "summary": "Add a volume and the container cannot find app.py, which is definitely in the image. The mount covered it up.",
+      "time": "20 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/07-volume-hides-app.md"
+    },
+    {
+      "id": "docker-08-stale-code",
+      "topic": "docker",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "You changed the code and the container runs the old version",
+      "summary": "Rebuild, rerun, same old behaviour. A cached layer and a container that was never replaced are both at fault.",
+      "time": "20 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/08-stale-code.md"
+    },
+    {
+      "id": "docker-09-signals-ignored",
+      "topic": "docker",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "docker stop takes ten seconds and kills the job",
+      "summary": "The app handles SIGTERM cleanly and never gets the chance. One line of the Dockerfile puts a shell at PID 1.",
+      "time": "20 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/09-signals-ignored.md"
+    },
+    {
+      "id": "docker-10-image-tag-drift",
+      "topic": "docker",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Two machines, same tag, different behaviour",
+      "summary": "Both hosts run internal/report:latest and behave differently. A tag is a mutable pointer, not an identity.",
+      "time": "15 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/10-image-tag-drift.md"
+    },
+    {
+      "id": "docker-11-workdir-relative-paths",
+      "topic": "docker",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The script that cannot find its own config file",
+      "summary": "The container fails to open config/settings.json, which is in the image. The working directory is not what the code assumes.",
+      "time": "15 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/11-workdir-relative-paths.md"
+    },
+    {
+      "id": "docker-12-disk-full",
+      "topic": "docker",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "No space left on device, and nothing is running",
+      "summary": "Docker is using 40 GB and docker ps shows almost nothing. Find the four hidden categories and reclaim safely.",
+      "time": "20 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/12-disk-full.md"
+    },
+    {
+      "id": "docker-13-containers-cannot-talk",
+      "topic": "docker",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The API cannot reach the database container",
+      "summary": "Two running containers, one connects to db:5432 and gets name-not-known. The default bridge network provides no DNS.",
+      "time": "20 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/13-containers-cannot-talk.md"
+    },
+    {
+      "id": "docker-14-compose-depends-on",
+      "topic": "docker",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "depends_on did not wait for the database",
+      "summary": "The API crashes on startup then recovers after retries. depends_on orders starts, it does not wait for readiness.",
+      "time": "25 min",
+      "prereqs": [
+        "docker",
+        "compose"
+      ],
+      "path": "scenarios/docker/14-compose-depends-on.md"
+    },
+    {
+      "id": "docker-15-mount-permission-denied",
+      "topic": "docker",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Permission denied writing to a directory you own",
+      "summary": "The container cannot write to a bind mount you own, and running as root leaves root-owned files in your tree. UIDs must match.",
+      "time": "25 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/15-mount-permission-denied.md"
+    },
+    {
+      "id": "docker-16-healthcheck-lies",
+      "topic": "docker",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The healthcheck that reports healthy while the app is broken",
+      "summary": "One container serves 500s and shows healthy; another works and shows unhealthy. Both checks test the wrong thing.",
+      "time": "25 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/16-healthcheck-lies.md"
+    },
+    {
+      "id": "docker-17-oomkilled",
+      "topic": "docker",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Exit code 137 and no error in the logs",
+      "summary": "A job dies mid-run with no traceback. Distinguish an OOM kill from an application crash and from docker stop.",
+      "time": "25 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/17-oomkilled.md"
+    },
+    {
+      "id": "docker-18-platform-mismatch",
+      "topic": "docker",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The image built on a laptop will not run on the server",
+      "summary": "exec format error on the servers, or twenty-times-slower emulation with no error at all. Build multi-arch images.",
+      "time": "25 min",
+      "prereqs": [
+        "docker",
+        "buildx"
+      ],
+      "path": "scenarios/docker/18-platform-mismatch.md"
+    },
+    {
+      "id": "docker-19-entrypoint-vs-cmd",
+      "topic": "docker",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Arguments to docker run are being ignored",
+      "summary": "docker run img --dry-run runs a full import, and you cannot get a shell. ENTRYPOINT and CMD are combined wrongly.",
+      "time": "20 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/19-entrypoint-vs-cmd.md"
+    },
+    {
+      "id": "docker-20-compose-env-precedence",
+      "topic": "docker",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The environment variable with four possible values",
+      "summary": "The .env says staging, Compose says staging, the container connects to production. Six sources, strictly ordered.",
+      "time": "25 min",
+      "prereqs": [
+        "docker",
+        "compose"
+      ],
+      "path": "scenarios/docker/20-compose-env-precedence.md"
+    },
+    {
+      "id": "docker-21-build-no-network",
+      "topic": "docker",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The build fails on the CI runner and works on your laptop",
+      "summary": "pip install times out inside docker build though the runner has internet. The build does not inherit your shell's proxy.",
+      "time": "25 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/21-build-no-network.md"
+    },
+    {
+      "id": "docker-22-secret-in-layer",
+      "topic": "docker",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The secret you deleted is still in the image",
+      "summary": "A key was copied in then removed in a later layer. It is gone from the filesystem and trivially extractable from the image.",
+      "time": "30 min",
+      "prereqs": [
+        "docker",
+        "buildkit"
+      ],
+      "path": "scenarios/docker/22-secret-in-layer.md"
+    },
+    {
+      "id": "docker-23-ci-cache-cold",
+      "topic": "docker",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Every CI build reinstalls every dependency",
+      "summary": "Local builds are fast, CI is eleven minutes every time. The layer cache lives on a builder that CI throws away.",
+      "time": "30 min",
+      "prereqs": [
+        "docker",
+        "buildx"
+      ],
+      "path": "scenarios/docker/23-ci-cache-cold.md"
+    },
+    {
+      "id": "docker-24-zombie-processes",
+      "topic": "docker",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Thousands of defunct processes in a long-running container",
+      "summary": "A container leaks process-table entries until it cannot fork. PID 1 is your app, and it is not reaping children.",
+      "time": "30 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/24-zombie-processes.md"
+    },
+    {
+      "id": "docker-25-socket-mount-escape",
+      "topic": "docker",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The CI container that is secretly root on the host",
+      "summary": "Mounting the Docker socket into a build agent gives anyone who can run a build root on the host. Build without it.",
+      "time": "30 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/25-socket-mount-escape.md"
+    },
+    {
+      "id": "docker-26-dns-resolution-fails",
+      "topic": "docker",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Containers cannot resolve DNS after a network change",
+      "summary": "Every container fails name resolution while the host is fine. Where the daemon reads resolv.conf, and when, is the key.",
+      "time": "30 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/26-dns-resolution-fails.md"
+    },
+    {
+      "id": "docker-27-image-bloat",
+      "topic": "docker",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The 1.2 GB image that should be 80 MB",
+      "summary": "A tiny service ships as 1.2 GB, pulled hundreds of times a day. Attribute the size to layers and cut it with multi-stage.",
+      "time": "30 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/27-image-bloat.md"
+    },
+    {
+      "id": "docker-28-graceful-shutdown-drain",
+      "topic": "docker",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Rolling deploys drop connections for ten seconds",
+      "summary": "Every deploy resets in-flight requests. Signal delivery and drain-versus-load-balancer ordering are both wrong.",
+      "time": "35 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/28-graceful-shutdown-drain.md"
+    },
+    {
+      "id": "docker-29-cpu-limit-throttling",
+      "topic": "docker",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The container that thinks it has 64 CPUs",
+      "summary": "Limited to 2 CPUs, the app sizes a 128-thread pool from the host core count and throttles under load. Read the cgroup.",
+      "time": "30 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/29-cpu-limit-throttling.md"
+    },
+    {
+      "id": "docker-30-apt-cache-poisoning",
+      "topic": "docker",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The layer cache poisoned by apt-get update",
+      "summary": "A split apt update/install desynchronises via layer caching, installing missing or stale package versions. Combine and pin.",
+      "time": "30 min",
+      "prereqs": [
+        "docker"
+      ],
+      "path": "scenarios/docker/30-apt-cache-poisoning.md"
+    },
+    {
+      "id": "k8s-01-crashloop",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "title": "CrashLoopBackOff on a pod that works locally",
+      "summary": "The same image runs fine under docker run. In the cluster it restarts forever. Read the pod's own account of what happened.",
+      "time": "30 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/01-crashloop.md"
+    },
+    {
+      "id": "k8s-02-service-no-endpoints",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "title": "Service returns connection refused, pods are Running",
+      "summary": "Every pod is ready and the Service exists, but curl through the Service times out. Nothing is in CrashLoop, so nothing looks wrong.",
+      "time": "35 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/02-service-no-endpoints.md"
+    },
+    {
+      "id": "k8s-03-rollout-stuck",
+      "topic": "kubernetes",
+      "level": "expert",
+      "title": "Rollout stuck at 1/3 and the old pods are gone",
+      "summary": "A deploy is half finished, capacity is degraded, and kubectl rollout status just hangs. Three separate mistakes are fighting each other.",
+      "time": "50 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/03-rollout-stuck.md"
+    },
+    {
+      "id": "k8s-04-imagepullbackoff",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "ImagePullBackOff on an image that exists",
+      "summary": "The pod cannot pull an image you can pull by hand. A typo'd tag or a missing pull secret, not a broken registry.",
+      "time": "15 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/04-imagepullbackoff.md"
+    },
+    {
+      "id": "k8s-05-pending-unschedulable",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The pod stuck Pending with nowhere to go",
+      "summary": "No node can take the pod. It asks for more CPU than any node has, or a nodeSelector nothing matches.",
+      "time": "15 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/05-pending-unschedulable.md"
+    },
+    {
+      "id": "k8s-06-configmap-not-applied",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The ConfigMap value that never reaches the container",
+      "summary": "You updated the ConfigMap and the app still uses the old value. It was never wired into the pod spec.",
+      "time": "20 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/06-configmap-not-applied.md"
+    },
+    {
+      "id": "k8s-07-secret-key-mismatch",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The pod that cannot read its own secret",
+      "summary": "CreateContainerConfigError because the key the pod asks for is not the key the Secret provides.",
+      "time": "15 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/07-secret-key-mismatch.md"
+    },
+    {
+      "id": "k8s-08-wrong-context",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "kubectl points at the wrong cluster",
+      "summary": "'No resources found' in one namespace, unfamiliar resources in another. The active context and namespace are not what you assume.",
+      "time": "15 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/08-wrong-context.md"
+    },
+    {
+      "id": "k8s-09-apply-no-effect",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The deployment applied cleanly and nothing changed",
+      "summary": "apply says configured or unchanged and the old pods keep running. Confirm the change actually reached the cluster.",
+      "time": "15 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/09-apply-no-effect.md"
+    },
+    {
+      "id": "k8s-10-liveness-restart-loop",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The container that exits before the probe can pass",
+      "summary": "A healthy app restarts every couple of minutes. A liveness probe hits an endpoint it does not serve.",
+      "time": "20 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/10-liveness-restart-loop.md"
+    },
+    {
+      "id": "k8s-11-selector-mismatch",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The label change that orphaned the pods",
+      "summary": "An immutable-selector error, or pods managed by nobody. Selector and template labels no longer agree.",
+      "time": "20 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/11-selector-mismatch.md"
+    },
+    {
+      "id": "k8s-12-namespace-terminating",
+      "topic": "kubernetes",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The namespace stuck in Terminating forever",
+      "summary": "Deleted an hour ago and still there. A resource carries a finalizer whose controller no longer exists.",
+      "time": "20 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/12-namespace-terminating.md"
+    },
+    {
+      "id": "k8s-13-service-no-endpoints",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The service that routes to nothing",
+      "summary": "A Service with a ClusterIP and zero endpoints is a black hole. Its selector matches no pod labels.",
+      "time": "20 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/13-service-no-endpoints.md"
+    },
+    {
+      "id": "k8s-14-networkpolicy-blocks-dns",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The pod that cannot talk after the network policy landed",
+      "summary": "DB connections and DNS both break once policies apply. Default-deny egress forgot to allow port 53.",
+      "time": "25 min",
+      "prereqs": [
+        "kubectl",
+        "cluster",
+        "cni"
+      ],
+      "path": "scenarios/kubernetes/14-networkpolicy-blocks-dns.md"
+    },
+    {
+      "id": "k8s-15-rollout-stuck",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The rollout that got stuck halfway",
+      "summary": "Old pods still serving, one new pod not ready, rollout status hangs. A safe pause on a bad image, not a bug.",
+      "time": "25 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/15-rollout-stuck.md"
+    },
+    {
+      "id": "k8s-16-pvc-pending",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The PVC that will not bind",
+      "summary": "The claim stays Pending and the pod with it. A missing StorageClass or an access mode the cluster cannot provide.",
+      "time": "20 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/16-pvc-pending.md"
+    },
+    {
+      "id": "k8s-17-rbac-forbidden",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The app that gets 403 from its own API server",
+      "summary": "Authenticated but not authorized. The ServiceAccount has no Role granting the verbs it calls.",
+      "time": "25 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/17-rbac-forbidden.md"
+    },
+    {
+      "id": "k8s-18-cpu-throttling",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The pod that is slow because it is being throttled",
+      "summary": "Latency spikes while average CPU stays under the limit. A CPU limit throttles bursts within each CFS period.",
+      "time": "25 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/18-cpu-throttling.md"
+    },
+    {
+      "id": "k8s-19-ingress-404",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The ingress that returns 404 for a route that exists",
+      "summary": "The Service works on port-forward but the ingress host 404s. Wrong class, wrong backend port, or unmatched host.",
+      "time": "25 min",
+      "prereqs": [
+        "kubectl",
+        "cluster",
+        "ingress"
+      ],
+      "path": "scenarios/kubernetes/19-ingress-404.md"
+    },
+    {
+      "id": "k8s-20-job-never-completes",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The job that runs forever and never completes",
+      "summary": "A Job retries a failing container endlessly and a CronJob overlaps its own runs. Bound retries, runtime and concurrency.",
+      "time": "25 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/20-job-never-completes.md"
+    },
+    {
+      "id": "k8s-21-hpa-not-scaling",
+      "topic": "kubernetes",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The HPA that will not scale",
+      "summary": "TARGETS shows <unknown> and replicas never move. No CPU requests to compute a percentage against, or no metrics-server.",
+      "time": "25 min",
+      "prereqs": [
+        "kubectl",
+        "cluster",
+        "metrics-server"
+      ],
+      "path": "scenarios/kubernetes/21-hpa-not-scaling.md"
+    },
+    {
+      "id": "k8s-22-node-notready",
+      "topic": "kubernetes",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The node that went NotReady and took the pods with it",
+      "summary": "One node stops reporting and its pods hang in limbo. Disk pressure, a dead kubelet, or lost control-plane contact.",
+      "time": "30 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/22-node-notready.md"
+    },
+    {
+      "id": "k8s-23-dns-ndots-latency",
+      "topic": "kubernetes",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The DNS that resolves everything except the one service you need",
+      "summary": "Slow, flaky resolution under load. ndots:5 and the search path turn one lookup into several and flood CoreDNS.",
+      "time": "30 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/23-dns-ndots-latency.md"
+    },
+    {
+      "id": "k8s-24-oversharing-secrets-rbac",
+      "topic": "kubernetes",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The pod that mounts a secret it should never see",
+      "summary": "A batch job is effectively cluster-admin and auto-mounts a powerful token. Cut the blast radius to least privilege.",
+      "time": "30 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/24-oversharing-secrets-rbac.md"
+    },
+    {
+      "id": "k8s-25-eviction-qos",
+      "topic": "kubernetes",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The eviction storm when the node ran out of memory",
+      "summary": "The important pods died and the memory hog survived. QoS class, set by your requests and limits, chose the victims.",
+      "time": "30 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/25-eviction-qos.md"
+    },
+    {
+      "id": "k8s-26-statefulset-data-loss",
+      "topic": "kubernetes",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The StatefulSet that lost its data on restart",
+      "summary": "Replicas share one PVC and fight over it, or come back empty. Use volumeClaimTemplates for per-replica storage.",
+      "time": "30 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/26-statefulset-data-loss.md"
+    },
+    {
+      "id": "k8s-27-admission-webhook-blocks",
+      "topic": "kubernetes",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The admission webhook that blocked the whole cluster",
+      "summary": "Every apply fails calling a webhook whose backend is down. failurePolicy Fail plus a broad scope wedged everything.",
+      "time": "35 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/27-admission-webhook-blocks.md"
+    },
+    {
+      "id": "k8s-28-pod-topology-spread",
+      "topic": "kubernetes",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The pods that all landed on one node",
+      "summary": "Three replicas, one node, no real HA. No enforced spread constraint, or one using a topology key the nodes lack.",
+      "time": "30 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/28-pod-topology-spread.md"
+    },
+    {
+      "id": "k8s-29-taints-tolerations",
+      "topic": "kubernetes",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The taints and tolerations that left pods homeless",
+      "summary": "The GPU pod cannot land and an ordinary pod drifts onto the pricey nodes. Taints repel, tolerations permit, affinity attracts.",
+      "time": "30 min",
+      "prereqs": [
+        "kubectl",
+        "cluster"
+      ],
+      "path": "scenarios/kubernetes/29-taints-tolerations.md"
+    },
+    {
+      "id": "k8s-30-cert-renewal-failed",
+      "topic": "kubernetes",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The certificate that expired and no one noticed",
+      "summary": "Auto-renewal silently failed and the cert expired. Trace Certificate to CertificateRequest to Order to Issuer.",
+      "time": "30 min",
+      "prereqs": [
+        "kubectl",
+        "cluster",
+        "cert-manager"
+      ],
+      "path": "scenarios/kubernetes/30-cert-renewal-failed.md"
+    },
+    {
+      "id": "git-01-committed-secret",
+      "topic": "git",
+      "level": "beginner",
+      "title": "The .gitignore that ignores nothing",
+      "summary": "You added the secrets file to .gitignore, but git still reports it as modified and it is already in the repository history.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/01-committed-secret.md"
+    },
+    {
+      "id": "git-02-merge-conflict",
+      "topic": "git",
+      "level": "intermediate",
+      "title": "A merge conflict in a pipeline file",
+      "summary": "Two branches edited the same CI job. Resolve the conflict so the pipeline is correct, not just so git stops complaining.",
+      "time": "35 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/02-merge-conflict.md"
+    },
+    {
+      "id": "git-03-lost-commits",
+      "topic": "git",
+      "level": "expert",
+      "title": "A hard reset ate this morning's work",
+      "summary": "Someone ran git reset --hard on the wrong branch and force-pushed. The commits are not in any branch. Get them back.",
+      "time": "45 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/03-lost-commits.md"
+    },
+    {
+      "id": "git-04-detached-head",
+      "topic": "git",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The commits that vanished after I switched branches",
+      "summary": "You committed on a detached HEAD. Switching to main left those commits unnamed. Recover them from the reflog.",
+      "time": "15 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/04-detached-head.md"
+    },
+    {
+      "id": "git-05-commit-missed-untracked",
+      "topic": "git",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The commit that succeeded and left the new files behind",
+      "summary": "git commit -am never stages untracked files. The message says you added them; the tree does not.",
+      "time": "15 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/05-commit-missed-untracked.md"
+    },
+    {
+      "id": "git-06-checkout-overwrites",
+      "topic": "git",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "checkout ate my uncommitted work",
+      "summary": "Forced checkout discarded edits that were never a commit. Stash or branch before you switch.",
+      "time": "15 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/06-checkout-overwrites.md"
+    },
+    {
+      "id": "git-07-missing-identity",
+      "topic": "git",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Every commit is owned by someone else",
+      "summary": "Author identity unknown, or root@localhost. Set user.name and user.email at the right scope.",
+      "time": "15 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/07-missing-identity.md"
+    },
+    {
+      "id": "git-08-crlf-filemode-noise",
+      "topic": "git",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Every file is modified and I did not change anything",
+      "summary": "Status is dirty from CRLF or filemode, not from real edits. Pin endings in .gitattributes.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/08-crlf-filemode-noise.md"
+    },
+    {
+      "id": "git-09-pull-wrong-branch",
+      "topic": "git",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "pull said already up to date, but the remote has new commits",
+      "summary": "git pull only updates the current branch's upstream. Fetch and switch to the branch you actually need.",
+      "time": "15 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/09-pull-wrong-branch.md"
+    },
+    {
+      "id": "git-10-clone-empty-wrong-branch",
+      "topic": "git",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "I cloned the repo and it is empty",
+      "summary": "Clone followed origin/HEAD onto an unused default branch. The files live on main.",
+      "time": "15 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/10-clone-empty-wrong-branch.md"
+    },
+    {
+      "id": "git-11-submodule-empty",
+      "topic": "git",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The submodule directory is empty after clone",
+      "summary": "A normal clone does not populate gitlinks. submodule update --init checks out the pinned SHA.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/11-submodule-empty.md"
+    },
+    {
+      "id": "git-12-amend-already-pushed",
+      "topic": "git",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "I amended a commit that was already pushed",
+      "summary": "Amend rewrites the SHA. Push is non-fast-forward; force-with-lease or a follow-up commit instead.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/12-amend-already-pushed.md"
+    },
+    {
+      "id": "git-13-rebase-wrong-direction",
+      "topic": "git",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "rebase turned my PR into a 40-commit mess",
+      "summary": "Rebase replays the wrong set of commits when the arguments are reversed. Abort and rebase onto main.",
+      "time": "25 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/13-rebase-wrong-direction.md"
+    },
+    {
+      "id": "git-14-stash-lost",
+      "topic": "git",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "stash pop destroyed my working tree",
+      "summary": "pop applies then drops. Recover from the stash reflog; prefer apply until the tree looks right.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/14-stash-lost.md"
+    },
+    {
+      "id": "git-15-cherry-pick-empty",
+      "topic": "git",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "cherry-pick says empty and the bug is still there",
+      "summary": "The patch is already in the branch, or you picked a merge without -m. Skip or pick the original commit.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/15-cherry-pick-empty.md"
+    },
+    {
+      "id": "git-16-force-push-lost-commit",
+      "topic": "git",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "force push erased a teammate's commit",
+      "summary": "--force sets the remote tip regardless. Recover the SHA from another clone; use --force-with-lease.",
+      "time": "25 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/16-force-push-lost-commit.md"
+    },
+    {
+      "id": "git-17-push-wrong-upstream",
+      "topic": "git",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "git push went to the wrong remote branch",
+      "summary": "Local feature/billing tracks origin/main. Read status -sb and push -u origin HEAD.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/17-push-wrong-upstream.md"
+    },
+    {
+      "id": "git-18-rm-still-tracked",
+      "topic": "git",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "I deleted the file but git still has it",
+      "summary": "rm is not git rm. Tracked files ignore gitignore until git rm --cached is committed.",
+      "time": "15 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/18-rm-still-tracked.md"
+    },
+    {
+      "id": "git-19-ours-theirs-wrong",
+      "topic": "git",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "--ours kept the wrong side of the merge",
+      "summary": "Whole-file ours/theirs drops the other side. During rebase the labels flip. Combine the hunks.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/19-ours-theirs-wrong.md"
+    },
+    {
+      "id": "git-20-lfs-pointer-not-file",
+      "topic": "git",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Git LFS showed me a 130-byte image in production",
+      "summary": "Checkout without smudge ships the pointer file. git lfs pull and CI lfs: true.",
+      "time": "20 min",
+      "prereqs": [
+        "git",
+        "git-lfs"
+      ],
+      "path": "scenarios/git/20-lfs-pointer-not-file.md"
+    },
+    {
+      "id": "git-21-hooks-not-running",
+      "topic": "git",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The pre-commit hook never runs",
+      "summary": "Hooks in the repo tree are not executed. Install into .git/hooks with +x, or set core.hooksPath.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/21-hooks-not-running.md"
+    },
+    {
+      "id": "git-22-rebase-i-dropped-commit",
+      "topic": "git",
+      "level": "expert",
+      "kind": "drill",
+      "title": "interactive rebase dropped a commit and I continued anyway",
+      "summary": "Deleting a pick line throws that commit off the new branch. Undo from reflog before you force-push.",
+      "time": "25 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/22-rebase-i-dropped-commit.md"
+    },
+    {
+      "id": "git-23-bisect-merge-commit",
+      "topic": "git",
+      "level": "expert",
+      "kind": "drill",
+      "title": "git bisect blamed a merge commit and I stopped looking",
+      "summary": "Bisect finds a boundary on this line of history. Walk the incoming parent or use -S for the real change.",
+      "time": "30 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/23-bisect-merge-commit.md"
+    },
+    {
+      "id": "git-24-filter-repo-secret",
+      "topic": "git",
+      "level": "expert",
+      "kind": "drill",
+      "title": "git filter-repo is the only way this secret leaves history",
+      "summary": "Removing the file from HEAD leaves the blob in old commits. Rewrite, rotate, and force-push every ref.",
+      "time": "30 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/24-filter-repo-secret.md"
+    },
+    {
+      "id": "git-25-worktree-already-checked-out",
+      "topic": "git",
+      "level": "expert",
+      "kind": "drill",
+      "title": "worktree: branch already checked out",
+      "summary": "A branch can be HEAD in only one worktree. Add a second tree on a new branch; clones do not share objects.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/25-worktree-already-checked-out.md"
+    },
+    {
+      "id": "git-26-shallow-clone-describe",
+      "topic": "git",
+      "level": "expert",
+      "kind": "drill",
+      "title": "CI cloned --depth 1 and cannot describe or push tags",
+      "summary": "fetch-depth: 1 has no tag ancestry. Unshallow or fetch-depth: 0 for release jobs.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/26-shallow-clone-describe.md"
+    },
+    {
+      "id": "git-27-rerere-bad-resolution",
+      "topic": "git",
+      "level": "expert",
+      "kind": "drill",
+      "title": "rerere keeps applying a bad merge resolution",
+      "summary": "Recorded resolutions replay without asking. git rerere forget the path and resolve correctly.",
+      "time": "25 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/27-rerere-bad-resolution.md"
+    },
+    {
+      "id": "git-28-push-to-non-bare",
+      "topic": "git",
+      "level": "expert",
+      "kind": "drill",
+      "title": "receive.denyCurrentBranch: the push to a non-bare repo",
+      "summary": "Pushing into a checkout is refused by default. Use a bare remote, not a human working tree.",
+      "time": "20 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/28-push-to-non-bare.md"
+    },
+    {
+      "id": "git-29-gc-pruned-recovery",
+      "topic": "git",
+      "level": "expert",
+      "kind": "drill",
+      "title": "gc deleted the commit I was going to recover",
+      "summary": "Reflog expiry then prune drop unreachable objects. Branch the SHA immediately; do not gc --prune=now in a panic.",
+      "time": "25 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/29-gc-pruned-recovery.md"
+    },
+    {
+      "id": "git-30-signed-commits-merge",
+      "topic": "git",
+      "level": "expert",
+      "kind": "drill",
+      "title": "signed commit, unsigned merge, broken verify",
+      "summary": "gpgsign fails without a key; merge commits are new unsigned objects. Sign with -S or SSH signing.",
+      "time": "30 min",
+      "prereqs": [
+        "git"
+      ],
+      "path": "scenarios/git/30-signed-commits-merge.md"
+    },
+    {
+      "id": "linux-01-permission-denied",
+      "topic": "linux",
+      "level": "beginner",
+      "title": "Permission denied on a script you own",
+      "summary": "You wrote the script, you own the file, and the shell still refuses to run it. Then it fails a second time for a different reason.",
+      "time": "20 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/01-permission-denied.md"
+    },
+    {
+      "id": "linux-02-port-in-use",
+      "topic": "linux",
+      "level": "intermediate",
+      "title": "Address already in use, and nothing is using it",
+      "summary": "The service refuses to bind port 8080. The obvious command shows nothing listening. Find the process and the second failure behind it.",
+      "time": "35 min",
+      "prereqs": [
+        "linux",
+        "python3"
+      ],
+      "path": "scenarios/linux/02-port-in-use.md"
+    },
+    {
+      "id": "linux-03-cron-silence",
+      "topic": "linux",
+      "level": "expert",
+      "title": "The cron job that runs and does nothing",
+      "summary": "The backup job works when you run it by hand. Under cron it produces no output, no backup, and no error. Diagnose it without guessing.",
+      "time": "45 min",
+      "prereqs": [
+        "linux",
+        "cron"
+      ],
+      "path": "scenarios/linux/03-cron-silence.md"
+    },
+    {
+      "id": "linux-04-inodes-exhausted",
+      "topic": "linux",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "No space left on device, and df says half empty",
+      "summary": "Writes fail while df -h shows free space. The disk is out of inodes, not bytes; df -i tells the truth.",
+      "time": "15 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/04-inodes-exhausted.md"
+    },
+    {
+      "id": "linux-05-path-command-not-found",
+      "topic": "linux",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "command not found, but the program is installed",
+      "summary": "It runs by full path and dies by name. The binary's directory is not on PATH, and cron's PATH differs.",
+      "time": "15 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/05-path-command-not-found.md"
+    },
+    {
+      "id": "linux-06-deleted-file-open",
+      "topic": "linux",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "You deleted the huge log and the disk is still full",
+      "summary": "rm removed the name but a process holds the file open, so the space is not freed. df and du disagree.",
+      "time": "20 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/06-deleted-file-open.md"
+    },
+    {
+      "id": "linux-07-broken-symlink",
+      "topic": "linux",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The symlink that points at nothing",
+      "summary": "A link and its target both exist, yet access fails. A relative symlink resolves from the link's own directory.",
+      "time": "15 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/07-broken-symlink.md"
+    },
+    {
+      "id": "linux-08-env-not-exported",
+      "topic": "linux",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The environment variable the child process cannot see",
+      "summary": "echo shows the value; the program launched sees nothing. A shell variable is not exported until you say so.",
+      "time": "15 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/08-env-not-exported.md"
+    },
+    {
+      "id": "linux-09-directory-execute-bit",
+      "topic": "linux",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The directory you cannot enter",
+      "summary": "You own it, it is readable, and cd is denied. On directories x means traverse, r means list; they are not the same.",
+      "time": "15 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/09-directory-execute-bit.md"
+    },
+    {
+      "id": "linux-10-sudo-secure-path",
+      "topic": "linux",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "sudo: command not found for a command that works",
+      "summary": "The tool runs as you and vanishes under sudo. sudo uses secure_path, not your PATH, on purpose.",
+      "time": "15 min",
+      "prereqs": [
+        "linux",
+        "sudo"
+      ],
+      "path": "scenarios/linux/10-sudo-secure-path.md"
+    },
+    {
+      "id": "linux-11-crlf-bad-interpreter",
+      "topic": "linux",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "bad interpreter: the script with invisible carriage returns",
+      "summary": "A perfect-looking script fails with bad interpreter. CRLF line endings put a carriage return in the shebang.",
+      "time": "15 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/11-crlf-bad-interpreter.md"
+    },
+    {
+      "id": "linux-12-argument-list-too-long",
+      "topic": "linux",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Argument list too long",
+      "summary": "rm *.log fails instantly on a huge directory. The shell expands the glob past the kernel's ARG_MAX.",
+      "time": "15 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/12-argument-list-too-long.md"
+    },
+    {
+      "id": "linux-13-runaway-cpu",
+      "topic": "linux",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The process pinning a core at 100% CPU",
+      "summary": "The box is loud and slow. Find the runaway from a cold start, identify it properly, contain it least-disruptively.",
+      "time": "20 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/13-runaway-cpu.md"
+    },
+    {
+      "id": "linux-14-oom-killer",
+      "topic": "linux",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The process the kernel killed for you",
+      "summary": "A service vanished with exit 137 and no crash log. The OOM killer took it; the record is in dmesg, not the app.",
+      "time": "25 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/14-oom-killer.md"
+    },
+    {
+      "id": "linux-15-too-many-open-files",
+      "topic": "linux",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Too many open files",
+      "summary": "A busy service hits EMFILE with resources to spare. Decide between a leak and a limit that is simply too low.",
+      "time": "25 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/15-too-many-open-files.md"
+    },
+    {
+      "id": "linux-16-systemd-service-fails",
+      "topic": "linux",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The systemd service that will not start",
+      "summary": "start returns, status says failed. Read the exit code and journal; fix Type, paths, user, and reload.",
+      "time": "25 min",
+      "prereqs": [
+        "linux",
+        "systemd"
+      ],
+      "path": "scenarios/linux/16-systemd-service-fails.md"
+    },
+    {
+      "id": "linux-17-readonly-filesystem",
+      "topic": "linux",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The filesystem that went read-only",
+      "summary": "Even root cannot write. errors=remount-ro tripped on disk errors; check the FS and the hardware before remounting.",
+      "time": "25 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/17-readonly-filesystem.md"
+    },
+    {
+      "id": "linux-18-signal-ignored",
+      "topic": "linux",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The process that ignores your kill",
+      "summary": "kill does nothing and you reach for -9. Tell an ignored SIGTERM apart from an uninterruptible D-state process.",
+      "time": "20 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/18-signal-ignored.md"
+    },
+    {
+      "id": "linux-19-logrotate-not-rotating",
+      "topic": "linux",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The logs that grew until the disk was full",
+      "summary": "Rotation runs but the log keeps growing. The service holds the renamed inode open; use copytruncate or a reload.",
+      "time": "20 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/19-logrotate-not-rotating.md"
+    },
+    {
+      "id": "linux-20-umount-target-busy",
+      "topic": "linux",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "target is busy: the filesystem you cannot unmount",
+      "summary": "umount refuses because something holds the mount. Find every open file and stray cwd, then unmount cleanly.",
+      "time": "20 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/20-umount-target-busy.md"
+    },
+    {
+      "id": "linux-21-umask-shared-files",
+      "topic": "linux",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The files everyone creates with the wrong permissions",
+      "summary": "Shared files come out with the wrong group and no group-write. umask, setgid and default ACLs, not chmod 777.",
+      "time": "25 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/21-umask-shared-files.md"
+    },
+    {
+      "id": "linux-22-high-load-io-wait",
+      "topic": "linux",
+      "level": "expert",
+      "kind": "drill",
+      "title": "High load average while the CPUs sit idle",
+      "summary": "Load is 20 and the CPUs are idle. Load counts D-state I/O waiters; the bottleneck is storage, not compute.",
+      "time": "30 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/22-high-load-io-wait.md"
+    },
+    {
+      "id": "linux-23-memory-cache-vs-used",
+      "topic": "linux",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The server that looks out of memory but is not",
+      "summary": "free shows almost nothing free and nothing is dying. Read available, not free; the cache is reclaimable.",
+      "time": "25 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/23-memory-cache-vs-used.md"
+    },
+    {
+      "id": "linux-24-strace-silent-failure",
+      "topic": "linux",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The binary that fails silently, traced with strace",
+      "summary": "A program exits non-zero with no message. strace shows the failing syscall and its errno directly.",
+      "time": "30 min",
+      "prereqs": [
+        "linux",
+        "strace"
+      ],
+      "path": "scenarios/linux/24-strace-silent-failure.md"
+    },
+    {
+      "id": "linux-25-ephemeral-port-exhaustion",
+      "topic": "linux",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Cannot assign requested address under load",
+      "summary": "A high-churn client runs out of ephemeral ports to TIME_WAIT. Reuse connections first, then tune the range.",
+      "time": "30 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/25-ephemeral-port-exhaustion.md"
+    },
+    {
+      "id": "linux-26-shared-library-not-found",
+      "topic": "linux",
+      "level": "expert",
+      "kind": "drill",
+      "title": "error while loading shared libraries",
+      "summary": "A binary cannot find a .so that exists on disk. Understand the linker search path and ldconfig, and soname changes.",
+      "time": "25 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/26-shared-library-not-found.md"
+    },
+    {
+      "id": "linux-27-df-vs-du-mismatch",
+      "topic": "linux",
+      "level": "expert",
+      "kind": "drill",
+      "title": "df says full, du says half - where did the space go",
+      "summary": "The filesystem is full but du cannot find it. Deleted-but-open files, or files shadowed under a mount point.",
+      "time": "30 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/27-df-vs-du-mismatch.md"
+    },
+    {
+      "id": "linux-28-capabilities-bind-port",
+      "topic": "linux",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The service that cannot bind port 80 without root",
+      "summary": "Binding a low port fails as non-root and the team runs it as root. Grant only CAP_NET_BIND_SERVICE instead.",
+      "time": "30 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/28-capabilities-bind-port.md"
+    },
+    {
+      "id": "linux-29-selinux-apparmor-denial",
+      "topic": "linux",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Permission denied, and the permissions are perfect",
+      "summary": "ls -l looks right and access is still denied. A mandatory access control layer denies it; read the audit log.",
+      "time": "35 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/29-selinux-apparmor-denial.md"
+    },
+    {
+      "id": "linux-30-sysctl-connection-limits",
+      "topic": "linux",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Connections dropped under load with resources free",
+      "summary": "The server drops connections while CPU and RAM idle. Kernel ceilings: listen backlog, conntrack, buffers.",
+      "time": "35 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/linux/30-sysctl-connection-limits.md"
+    },
+    {
+      "id": "python-01-missing-env",
+      "topic": "python",
+      "level": "beginner",
+      "title": "KeyError at 3 a.m.",
+      "summary": "A deploy script crashes with a bare traceback the moment an environment variable is absent. Make the failure useful instead of cryptic.",
+      "time": "25 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/01-missing-env.md"
+    },
+    {
+      "id": "python-02-venv-deps",
+      "topic": "python",
+      "level": "intermediate",
+      "title": "Works on my machine, ModuleNotFoundError in CI",
+      "summary": "The script runs on your laptop and dies in the pipeline. The requirements file is the problem, and so is how the script is invoked.",
+      "time": "35 min",
+      "prereqs": [
+        "python3",
+        "pip"
+      ],
+      "path": "scenarios/python/02-venv-deps.md"
+    },
+    {
+      "id": "python-03-subprocess-exit",
+      "topic": "python",
+      "level": "expert",
+      "title": "The automation that reports success after failing",
+      "summary": "A deployment wrapper calls three commands. The middle one fails, the script prints DONE and exits 0. This is how bad releases reach production.",
+      "time": "45 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/03-subprocess-exit.md"
+    },
+    {
+      "id": "python-04-yaml-bool-coercion",
+      "topic": "python",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The inventory said Norway was down, and so was the node named on",
+      "summary": "YAML 1.1 turns NO/on/off/yes into booleans. Inventory loaders skip False names and roll True.",
+      "time": "15 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/04-yaml-bool-coercion.md"
+    },
+    {
+      "id": "python-05-cron-cwd-relative",
+      "topic": "python",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The backup script works in the repo and writes nothing under cron",
+      "summary": "Relative Path('targets.txt') follows cwd, not the .py file. Cron's cwd is /.",
+      "time": "15 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/05-cron-cwd-relative.md"
+    },
+    {
+      "id": "python-06-http-no-timeout",
+      "topic": "python",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The watchdog is stuck and the pipeline slot is occupied for an hour",
+      "summary": "urlopen/requests without timeout= wait forever. Bound connect and read, fail the job.",
+      "time": "15 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/06-http-no-timeout.md"
+    },
+    {
+      "id": "python-07-http-status-ignored",
+      "topic": "python",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The sync job printed OK and the inventory is yesterday's 404 page",
+      "summary": "Transport success is not HTTP 2xx. raise_for_status; never turn a 404 HTML page into zero hosts.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/07-http-status-ignored.md"
+    },
+    {
+      "id": "python-08-argparse-default-prod",
+      "topic": "python",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "I forgot the flag and it deployed to production",
+      "summary": "argparse default=prod is a deploy. Require --env and a second flag for production.",
+      "time": "15 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/08-argparse-default-prod.md"
+    },
+    {
+      "id": "python-09-print-vs-logging",
+      "topic": "python",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The job ran, CloudWatch has one line that says done, and we cannot grep it",
+      "summary": "print() has no time, level, or fields, and it breaks jq on stdout. Log to stderr.",
+      "time": "15 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/09-print-vs-logging.md"
+    },
+    {
+      "id": "python-10-version-string-compare",
+      "topic": "python",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The agent upgrade skipped 1.10 because 1.9 was newer",
+      "summary": "String compare says '1.10' < '1.9'. Parse integers or packaging.version, then decide.",
+      "time": "15 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/10-version-string-compare.md"
+    },
+    {
+      "id": "python-11-json-mixed-with-logs",
+      "topic": "python",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "jq says parse error and kubectl said the object was fine",
+      "summary": "check_output captured a warning on stdout with the JSON. Parse only the document; log on stderr.",
+      "time": "15 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/11-json-mixed-with-logs.md"
+    },
+    {
+      "id": "python-12-wrong-interpreter",
+      "topic": "python",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "./cleanup.py dies on the jump host and runs on your laptop",
+      "summary": "#!/usr/bin/env python is not python3. The shebang is the production interpreter.",
+      "time": "15 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/12-wrong-interpreter.md"
+    },
+    {
+      "id": "python-13-template-silent-undefined",
+      "topic": "python",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The rendered nginx config has server_name ; and nginx still started",
+      "summary": "Missing {{hostname}} became empty. StrictUndefined / KeyError; do not write a hole.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/13-template-silent-undefined.md"
+    },
+    {
+      "id": "python-14-eval-config",
+      "topic": "python",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The Python config from the other team deleted the working directory",
+      "summary": "eval/exec/yaml.load/pickle of a settings file is code execution. ast.literal_eval or JSON.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/14-eval-config.md"
+    },
+    {
+      "id": "python-15-api-pagination",
+      "topic": "python",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The audit said 30 IAM keys and the account has 400",
+      "summary": "The first page is a page. Follow next/NextToken/Link until it is gone.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/15-api-pagination.md"
+    },
+    {
+      "id": "python-16-retry-client-errors",
+      "topic": "python",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The retry loop turned a 404 into a 20-minute outage",
+      "summary": "Retries are for 429/502, not for 404. Classify before sleep; cap wall time.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/16-retry-client-errors.md"
+    },
+    {
+      "id": "python-17-ssl-verify-false",
+      "topic": "python",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "verify=False is still in the healthcheck we copied to production",
+      "summary": "An unverified HTTPS canary is a TCP check. Pass cafile; grep the org for verify=False.",
+      "time": "20 min",
+      "prereqs": [
+        "python3",
+        "openssl"
+      ],
+      "path": "scenarios/python/17-ssl-verify-false.md"
+    },
+    {
+      "id": "python-18-non-atomic-write",
+      "topic": "python",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The node went NotReady because we crashed while rewriting kubelet config",
+      "summary": "open(path,'w') truncates first. Write a sibling temp file and os.replace.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/18-non-atomic-write.md"
+    },
+    {
+      "id": "python-19-overlapping-cron-lock",
+      "topic": "python",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Two crons ran the drain and the node was cordoned twice into a deadlock",
+      "summary": "A 8-minute job on a 5-minute cron overlaps. flock or concurrencyPolicy: Forbid.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/19-overlapping-cron-lock.md"
+    },
+    {
+      "id": "python-20-secrets-in-logs",
+      "topic": "python",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The exception handler logged the Authorization header to Slack",
+      "summary": "repr(request) includes the bearer token. Log URL and error class; redact headers.",
+      "time": "15 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/20-secrets-in-logs.md"
+    },
+    {
+      "id": "python-21-naive-datetime-expiry",
+      "topic": "python",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The cert-expiry cron said 12 days left and the cert died at midnight UTC",
+      "summary": "datetime.now() is naive local time. Parse Z as UTC and compare timezone-aware clocks.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/21-naive-datetime-expiry.md"
+    },
+    {
+      "id": "python-22-sigterm-mid-job",
+      "topic": "python",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Kubernetes sent SIGTERM and the job wrote a half-empty dump anyway",
+      "summary": "Uncaught SIGTERM is a mid-file crash. Handle it, stop the loop, exit 1, publish atomically.",
+      "time": "25 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/22-sigterm-mid-job.md"
+    },
+    {
+      "id": "python-23-futures-swallowed",
+      "topic": "python",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Parallel rollouts: three nodes failed and the script printed SUCCESS",
+      "summary": "Thread exceptions live on the Future until .result(). Collect failures; exit non-zero.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/23-futures-swallowed.md"
+    },
+    {
+      "id": "python-24-retry-after-429",
+      "topic": "python",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Fifty crons woke up at :00 and the API spent 10 minutes saying 429",
+      "summary": "Honour Retry-After, add jitter, stagger crontab. Immediate retry is a thundering herd.",
+      "time": "25 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/24-retry-after-429.md"
+    },
+    {
+      "id": "python-25-stdlib-shadow",
+      "topic": "python",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The deploy script imported json and got our helper instead of the stdlib",
+      "summary": "cwd is on sys.path. A local json.py shadows the stdlib under systemd WorkingDirectory.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/25-stdlib-shadow.md"
+    },
+    {
+      "id": "python-26-non-idempotent-create",
+      "topic": "python",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Every hourly run created another DNS record named app",
+      "summary": "POST every cron is 720 records a month. Lookup by natural key; upsert or no-op.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/26-non-idempotent-create.md"
+    },
+    {
+      "id": "python-27-glob-symlink-cleanup",
+      "topic": "python",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The cleanup glob followed a symlink and wiped /var/lib/app",
+      "summary": "Path.glob('**/*') descends through scratch/data -> /var/lib/app. Skip symlinks; prefix-check.",
+      "time": "25 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/27-glob-symlink-cleanup.md"
+    },
+    {
+      "id": "python-28-prometheus-textfile",
+      "topic": "python",
+      "level": "expert",
+      "kind": "drill",
+      "title": "node-exporter scraped a textfile of zero bytes and Grafana said the box was gone",
+      "summary": "Empty .prom plus exit 0 hides the outage. Publish app_up 0, stable labels, atomic replace.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/28-prometheus-textfile.md"
+    },
+    {
+      "id": "python-29-stdout-protocol",
+      "topic": "python",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Terraform's external data source got INFO starting instead of JSON",
+      "summary": "Stdout is the protocol. Logs on stderr; one JSON object on stdout; stringly-typed for terraform.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/29-stdout-protocol.md"
+    },
+    {
+      "id": "python-30-fail-open-gate",
+      "topic": "python",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The security gate timed out and the pipeline shipped anyway",
+      "summary": "except Exception: return 0 is fail-open. If the scanner did not run, do not deploy.",
+      "time": "20 min",
+      "prereqs": [
+        "python3"
+      ],
+      "path": "scenarios/python/30-fail-open-gate.md"
+    },
+    {
+      "id": "bash-01-unquoted",
+      "topic": "bash",
+      "level": "beginner",
+      "title": "The backup script that deletes the wrong thing",
+      "summary": "An unquoted variable turns one path with a space into two arguments. The script reports success while doing something else entirely.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/01-unquoted.md"
+    },
+    {
+      "id": "bash-02-pipefail",
+      "topic": "bash",
+      "level": "intermediate",
+      "title": "Exit code 0 on a pipeline that failed",
+      "summary": "A CI step greps a log that was never produced. Every command in the chain failed and the job still went green.",
+      "time": "30 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/02-pipefail.md"
+    },
+    {
+      "id": "bash-03-trap-cleanup",
+      "topic": "bash",
+      "level": "expert",
+      "title": "The script that leaks a lock file forever",
+      "summary": "It creates a lock and a temp dir, then exits early on error and leaves both behind. Every later run refuses to start.",
+      "time": "45 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/03-trap-cleanup.md"
+    },
+    {
+      "id": "bash-04-test-vs-double-bracket",
+      "topic": "bash",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The if that is always true",
+      "summary": "[ $STATUS = 200 ] explodes on empty and globs inside [ ]. Quote or use [[ and -eq.",
+      "time": "15 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/04-test-vs-double-bracket.md"
+    },
+    {
+      "id": "bash-05-arithmetic-vs-string",
+      "topic": "bash",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "08 is not a number, and 1+1 is 11",
+      "summary": "Leading zeros are octal in $(( )). String + is concatenation. Force base 10.",
+      "time": "15 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/05-arithmetic-vs-string.md"
+    },
+    {
+      "id": "bash-06-source-vs-execute",
+      "topic": "bash",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The env file I ran did nothing",
+      "summary": "./env.sh exports in a child. source / . runs in this shell so REGION survives.",
+      "time": "15 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/06-source-vs-execute.md"
+    },
+    {
+      "id": "bash-07-cd-in-subshell",
+      "topic": "bash",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The script cds and then I am still in the old directory",
+      "summary": "cd in a child or pipe cannot change the parent cwd. Source, or use absolute paths.",
+      "time": "15 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/07-cd-in-subshell.md"
+    },
+    {
+      "id": "bash-08-glob-nullglob",
+      "topic": "bash",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "rm *.log deleted a file named *.log",
+      "summary": "Unmatched globs pass through as the pattern. nullglob or an array loop is the safe delete.",
+      "time": "15 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/08-glob-nullglob.md"
+    },
+    {
+      "id": "bash-09-read-ifs",
+      "topic": "bash",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "read ate the leading spaces and the last line",
+      "summary": "Default IFS trims; read exits 1 at EOF without a newline. IFS= read -r and || [[ -n $line ]].",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/09-read-ifs.md"
+    },
+    {
+      "id": "bash-10-heredoc-expansion",
+      "topic": "bash",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The heredoc that leaked the password and broke the script",
+      "summary": "Unquoted <<EOF expands $HOME and secrets. Quote the delimiter or escape the dollars you need literal.",
+      "time": "15 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/10-heredoc-expansion.md"
+    },
+    {
+      "id": "bash-11-set-e-exceptions",
+      "topic": "bash",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "set -e did not stop the script",
+      "summary": "errexit is off in if / || / while conditions. Handle critical failures explicitly; keep set -e as a backstop.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/11-set-e-exceptions.md"
+    },
+    {
+      "id": "bash-12-bash-source-vs-zero",
+      "topic": "bash",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "$0 is the wrapper, not this file",
+      "summary": "Sourced libraries that dirname $0 look next to the caller. Use BASH_SOURCE[0] for the current file.",
+      "time": "15 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/12-bash-source-vs-zero.md"
+    },
+    {
+      "id": "bash-13-ifs-global",
+      "topic": "bash",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "IFS=, turned every line into one field",
+      "summary": "Global IFS changes every unquoted split. Prefix IFS=, to read, join in a subshell.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/13-ifs-global.md"
+    },
+    {
+      "id": "bash-14-pipe-while-subshell",
+      "topic": "bash",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The while loop forgot every variable",
+      "summary": "find | while read runs in a subshell; counters die. Process substitution keeps the loop in this shell.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/14-pipe-while-subshell.md"
+    },
+    {
+      "id": "bash-15-arrays-vs-strings",
+      "topic": "bash",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "${arr[1]} is empty and arr=foo still looks like an array",
+      "summary": "files=*.txt is a string. Parentheses make arrays; echo $arr is only [0]; use \"${arr[@]}\".",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/15-arrays-vs-strings.md"
+    },
+    {
+      "id": "bash-16-nounset-optional-args",
+      "topic": "bash",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "set -u vs optional arguments",
+      "summary": "$1 is unbound with zero args. Check $# and ${2:-latest}; keep nounset on.",
+      "time": "15 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/16-nounset-optional-args.md"
+    },
+    {
+      "id": "bash-17-local-assignment-order",
+      "topic": "bash",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "local foo=bar bash considers unset",
+      "summary": "local a=1 b=$a expands b first; local n=$(false) hides the failure. Split local and assign.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/17-local-assignment-order.md"
+    },
+    {
+      "id": "bash-18-xargs-spaces",
+      "topic": "bash",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "xargs ran the command twice on one filename",
+      "summary": "Default xargs splits on spaces. find -print0 | xargs -0, or find -exec ... {} +.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/18-xargs-spaces.md"
+    },
+    {
+      "id": "bash-19-wait-background-jobs",
+      "topic": "bash",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The background job I forgot to wait for",
+      "summary": "backup &; exit 0 is green while the child fails. Save $! and wait; accumulate status.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/19-wait-background-jobs.md"
+    },
+    {
+      "id": "bash-20-getopts",
+      "topic": "bash",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "getopts swallowed the argument after -f",
+      "summary": "getopts fv does not take a file for -f. Put : after letters that need args; shift OPTIND.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/20-getopts.md"
+    },
+    {
+      "id": "bash-21-process-subst-status",
+      "topic": "bash",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Process substitution hid the curl exit code",
+      "summary": "jq < <(curl) loses HTTP failure. Write the body with -o and -w '%{http_code}', then parse.",
+      "time": "20 min",
+      "prereqs": [
+        "bash",
+        "curl"
+      ],
+      "path": "scenarios/bash/21-process-subst-status.md"
+    },
+    {
+      "id": "bash-22-nameref-indirect",
+      "topic": "bash",
+      "level": "expert",
+      "kind": "drill",
+      "title": "nameref and ${!var} pointed at the wrong thing",
+      "summary": "declare -n ref=$1 collides or injects. Validate identifiers; never eval untrusted names.",
+      "time": "25 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/22-nameref-indirect.md"
+    },
+    {
+      "id": "bash-23-errtrap-errtrace",
+      "topic": "bash",
+      "level": "expert",
+      "kind": "drill",
+      "title": "trap DEBUG and ERR that never fired",
+      "summary": "ERR traps need set -E to run in functions. Cleanup stays on EXIT; pair errexit with errtrace.",
+      "time": "25 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/23-errtrap-errtrace.md"
+    },
+    {
+      "id": "bash-24-fifo-coproc-deadlock",
+      "topic": "bash",
+      "level": "expert",
+      "kind": "drill",
+      "title": "lastpipe, coproc, and the fifo that deadlocked",
+      "summary": "Opening a FIFO for read blocks until a writer. exec 3<> or drain the coproc; pipe buffers are finite.",
+      "time": "30 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/24-fifo-coproc-deadlock.md"
+    },
+    {
+      "id": "bash-25-associative-arrays",
+      "topic": "bash",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Associative array keys that look like numbers",
+      "summary": "Indexed arrays treat 08 as octal 8. declare -A first; keys are strings; iteration order is not sorted.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/25-associative-arrays.md"
+    },
+    {
+      "id": "bash-26-eval-injection",
+      "topic": "bash",
+      "level": "expert",
+      "kind": "drill",
+      "title": "eval constructed a command from untrusted input",
+      "summary": "eval \"docker run $FLAGS\" runs $(touch pwned). Build argv arrays; never eval user flags.",
+      "time": "25 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/26-eval-injection.md"
+    },
+    {
+      "id": "bash-27-flock-inode",
+      "topic": "bash",
+      "level": "expert",
+      "kind": "drill",
+      "title": "flock: the lock that did not lock",
+      "summary": "rm the lock file then flock a new inode. Hold an fd on a stable local file for the process lifetime.",
+      "time": "25 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/27-flock-inode.md"
+    },
+    {
+      "id": "bash-28-bashisms-vs-posix",
+      "topic": "bash",
+      "level": "expert",
+      "kind": "drill",
+      "title": "It works in bash and dies under /bin/sh",
+      "summary": "dash rejects pipefail, arrays, and [[. Either #!/usr/bin/env bash or rewrite to POSIX.",
+      "time": "25 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/28-bashisms-vs-posix.md"
+    },
+    {
+      "id": "bash-29-set-x-secrets",
+      "topic": "bash",
+      "level": "expert",
+      "kind": "drill",
+      "title": "set -x printed the secret in CI",
+      "summary": "xtrace expands curl -u admin:$PASSWORD into the log. set +x around secrets; keep them off argv.",
+      "time": "20 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/29-set-x-secrets.md"
+    },
+    {
+      "id": "bash-30-sigpipe-pipestatus",
+      "topic": "bash",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Job control: SIGPIPE, yes | head, and a pipeline that lies",
+      "summary": "pipefail treats yes|head as 141. Save PIPESTATUS; allow SIGPIPE only for known early-close consumers.",
+      "time": "25 min",
+      "prereqs": [
+        "bash"
+      ],
+      "path": "scenarios/bash/30-sigpipe-pipestatus.md"
+    },
+    {
+      "id": "terraform-01-validate",
+      "topic": "terraform",
+      "level": "beginner",
+      "title": "Terraform will not even initialise",
+      "summary": "Four small mistakes in one config: a bad provider block, an undeclared variable, a wrong reference, and a type error. No cloud account required.",
+      "time": "30 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/01-validate.md"
+    },
+    {
+      "id": "terraform-02-count-foreach",
+      "topic": "terraform",
+      "level": "intermediate",
+      "title": "Renaming one item destroys five resources",
+      "summary": "The config uses count over a list. Removing the first element makes the plan recreate everything after it. Fix the addressing, not the list.",
+      "time": "40 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/02-count-foreach.md"
+    },
+    {
+      "id": "terraform-03-state-drift",
+      "topic": "terraform",
+      "level": "expert",
+      "title": "The plan wants to destroy production",
+      "summary": "Someone changed a resource by hand and someone else renamed it in code. Reconcile state and reality until plan shows no destroys.",
+      "time": "55 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/03-state-drift.md"
+    },
+    {
+      "id": "terraform-04-tfvars-not-loaded",
+      "topic": "terraform",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Plan says `dev` while you are holding `prod.tfvars`",
+      "summary": "prod.tfvars is not auto-loaded; only terraform.tfvars / *.auto.tfvars are. Plan uses defaults until -var-file.",
+      "time": "15 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/04-tfvars-not-loaded.md"
+    },
+    {
+      "id": "terraform-05-module-output-missing",
+      "topic": "terraform",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "`module.web.addr` does not exist",
+      "summary": "Root interpolates a child attribute that was never output. Locals inside the module stay private.",
+      "time": "15 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/05-module-output-missing.md"
+    },
+    {
+      "id": "terraform-06-path-module",
+      "topic": "terraform",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "`templatefile` cannot find a file that is in the module",
+      "summary": "templatefile path is resolved from cwd, not the module. Use path.module.",
+      "time": "15 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/06-path-module.md"
+    },
+    {
+      "id": "terraform-07-required-version",
+      "topic": "terraform",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Terraform refuses to run: core version",
+      "summary": "required_version is newer than the installed CLI; init never reaches providers.",
+      "time": "15 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/07-required-version.md"
+    },
+    {
+      "id": "terraform-08-workspace",
+      "topic": "terraform",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Staging workspace looks empty after a successful apply",
+      "summary": "Applied in default, then selected staging. Local state is a different file, not a relabel.",
+      "time": "15 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/08-workspace.md"
+    },
+    {
+      "id": "terraform-09-lockfile-missing",
+      "topic": "terraform",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "CI picked a different provider version than your laptop",
+      "summary": ".terraform.lock.hcl was not committed; CI floated a different provider version.",
+      "time": "15 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/09-lockfile-missing.md"
+    },
+    {
+      "id": "terraform-10-sensitive-output",
+      "topic": "terraform",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The database password is in the CI log",
+      "summary": "Password in terraform output / CI logs. sensitive redacts CLI; the value stays in state.",
+      "time": "15 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/10-sensitive-output.md"
+    },
+    {
+      "id": "terraform-11-chdir",
+      "topic": "terraform",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "They ran Terraform in the other stack",
+      "summary": "Two roots in one repo; they applied the wrong stack. Use -chdir.",
+      "time": "15 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/11-chdir.md"
+    },
+    {
+      "id": "terraform-12-data-source-missing",
+      "topic": "terraform",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The data source has nothing to read",
+      "summary": "data.local_file / remote state points at a missing file or empty outputs.",
+      "time": "15 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/12-data-source-missing.md"
+    },
+    {
+      "id": "terraform-13-import",
+      "topic": "terraform",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The file is already there; Terraform wants to create it",
+      "summary": "Object exists, state is empty, plan wants to create. terraform import the address.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/13-import.md"
+    },
+    {
+      "id": "terraform-14-moved-block",
+      "topic": "terraform",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Renaming a resource destroys it",
+      "summary": "Renaming a resource address is destroy/create until moved {}.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/14-moved-block.md"
+    },
+    {
+      "id": "terraform-15-state-rm",
+      "topic": "terraform",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "`state rm` made the next apply recreate the resource",
+      "summary": "state rm unmanages; next apply recreates. Import it back, do not rm to silence a plan.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/15-state-rm.md"
+    },
+    {
+      "id": "terraform-16-ignore-changes",
+      "topic": "terraform",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "`ignore_changes` hid the drift permanently",
+      "summary": "lifecycle ignore_changes makes plan empty while reality is wrong.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/16-ignore-changes.md"
+    },
+    {
+      "id": "terraform-17-module-git-ref",
+      "topic": "terraform",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Yesterday's plan is not today's: the module tracks `main`",
+      "summary": "Module source tracks main; yesterday's plan is not today's. Pin a tag or SHA.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/17-module-git-ref.md"
+    },
+    {
+      "id": "terraform-18-dynamic-block",
+      "topic": "terraform",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "`dynamic \"ingress\"` emitted nothing (then exploded on a duplicate key)",
+      "summary": "dynamic for_each empty is N=0; duplicate keys explode. Key on a unique attribute.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/18-dynamic-block.md"
+    },
+    {
+      "id": "terraform-19-remote-state",
+      "topic": "terraform",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Remote state outputs are empty (wrong key)",
+      "summary": "terraform_remote_state reads the wrong workspace or key; outputs are empty.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/19-remote-state.md"
+    },
+    {
+      "id": "terraform-20-precondition",
+      "topic": "terraform",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The precondition failed with the message `invalid`",
+      "summary": "lifecycle.precondition inverted or error_message useless. Fix the boolean and the text.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/20-precondition.md"
+    },
+    {
+      "id": "terraform-21-create-before-destroy",
+      "topic": "terraform",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "`create_before_destroy` plus a name that can only exist once",
+      "summary": "create_before_destroy plus a unique name cannot exist twice during replacement.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/21-create-before-destroy.md"
+    },
+    {
+      "id": "terraform-22-backend-no-lock",
+      "topic": "terraform",
+      "level": "expert",
+      "kind": "drill",
+      "title": "S3 backend, no lock: last apply wins",
+      "summary": "S3 backend without DynamoDB/use_lockfile: concurrent applies, last writer wins.",
+      "time": "25 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/22-backend-no-lock.md"
+    },
+    {
+      "id": "terraform-23-secrets-in-state",
+      "topic": "terraform",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The private key is in `terraform.tfstate`",
+      "summary": "random_password / tls_private_key are plaintext in tfstate. What belongs in TF vs SSM.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/23-secrets-in-state.md"
+    },
+    {
+      "id": "terraform-24-target-apply",
+      "topic": "terraform",
+      "level": "expert",
+      "kind": "drill",
+      "title": "`-target` left the stack half-updated",
+      "summary": "apply -target left the stack half-updated; the next full plan is the rest of the diff.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/24-target-apply.md"
+    },
+    {
+      "id": "terraform-25-provider-in-module",
+      "topic": "terraform",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Provider block inside the child module; alias never arrives",
+      "summary": "provider {} inside a child module blocks passed aliases. Root configures; child consumes.",
+      "time": "25 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/25-provider-in-module.md"
+    },
+    {
+      "id": "terraform-26-unknown-foreach",
+      "topic": "terraform",
+      "level": "expert",
+      "kind": "drill",
+      "title": "`for_each` depends on a value unknown until apply",
+      "summary": "for_each over a value unknown until apply cannot be planned. Iterate a known variable.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/26-unknown-foreach.md"
+    },
+    {
+      "id": "terraform-27-graph-cycle",
+      "topic": "terraform",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Cycle: each file points at the other",
+      "summary": "Two resources reference each other. Break the cycle with locals for static values.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/27-graph-cycle.md"
+    },
+    {
+      "id": "terraform-28-replace-triggered",
+      "topic": "terraform",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Everything replaces because of `replace_triggered_by` and `timestamp()`",
+      "summary": "replace_triggered_by a timestamp/nonce recreates the resource every plan.",
+      "time": "20 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/28-replace-triggered.md"
+    },
+    {
+      "id": "terraform-29-state-pull-surgery",
+      "topic": "terraform",
+      "level": "expert",
+      "kind": "drill",
+      "title": "`jq` on state without `state mv`: serial mismatch",
+      "summary": "jq-edited state without state mv: serial/checksum mismatch. Restore; use state mv.",
+      "time": "25 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/29-state-pull-surgery.md"
+    },
+    {
+      "id": "terraform-30-partial-backend",
+      "topic": "terraform",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Backend migrated halfway: two state files",
+      "summary": "init without -migrate-state created an empty new state beside the old one.",
+      "time": "25 min",
+      "prereqs": [
+        "terraform"
+      ],
+      "path": "scenarios/terraform/30-partial-backend.md"
+    },
+    {
+      "id": "aws-01-s3-access-denied",
+      "topic": "aws",
+      "level": "beginner",
+      "title": "AccessDenied on a bucket you own",
+      "summary": "You create a user, attach a policy that looks correct, and every S3 call is denied. The policy is missing something specific.",
+      "time": "35 min",
+      "prereqs": [
+        "aws-cli",
+        "aws account"
+      ],
+      "path": "scenarios/aws/01-s3-access-denied.md"
+    },
+    {
+      "id": "aws-02-sg-unreachable",
+      "topic": "aws",
+      "level": "intermediate",
+      "title": "The instance nobody can reach",
+      "summary": "An EC2 instance is running and healthy in the console. SSH and HTTP both hang. Four different layers could be at fault.",
+      "time": "45 min",
+      "prereqs": [
+        "aws-cli",
+        "aws account"
+      ],
+      "path": "scenarios/aws/02-sg-unreachable.md"
+    },
+    {
+      "id": "aws-03-assume-role",
+      "topic": "aws",
+      "level": "expert",
+      "title": "CI cannot assume the deploy role",
+      "summary": "The role has the right permissions and the pipeline still gets AccessDenied on sts:AssumeRole. Two policies must agree and only one does.",
+      "time": "55 min",
+      "prereqs": [
+        "aws-cli",
+        "aws account"
+      ],
+      "path": "scenarios/aws/03-assume-role.md"
+    },
+    {
+      "id": "aws-04-explicit-deny",
+      "topic": "aws",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Allow looks wide open. Every call is still denied.",
+      "summary": "Identity Allow matches, but a leftover Deny also matches. Deny wins; simulator says explicitDeny.",
+      "time": "15 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/04-explicit-deny.md"
+    },
+    {
+      "id": "aws-05-wrong-region",
+      "topic": "aws",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "AccessDenied in us-east-1 for a secret that exists",
+      "summary": "Resource lives in eu-west-1; the job defaults to us-east-1. Looks like IAM; it is a region miss.",
+      "time": "15 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/05-wrong-region.md"
+    },
+    {
+      "id": "aws-06-instance-profile",
+      "topic": "aws",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The instance profile is attached and the app still uses yesterday's keys",
+      "summary": "IMDS is healthy; the process still signs with env keys because the SDK prefers the environment.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/06-instance-profile.md"
+    },
+    {
+      "id": "aws-07-sg-self-reference",
+      "topic": "aws",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The security group allows itself, and the instances are not in it",
+      "summary": "SG allows itself but the instances are in a different group. Self-reference is not 'open to the app'.",
+      "time": "15 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/07-sg-self-reference.md"
+    },
+    {
+      "id": "aws-08-s3-bucket-policy-deny",
+      "topic": "aws",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "IAM allows GetObject. The bucket policy does not.",
+      "summary": "Identity policy allows GetObject; the bucket policy Deny still wins.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/08-s3-bucket-policy-deny.md"
+    },
+    {
+      "id": "aws-09-iam-condition-key",
+      "topic": "aws",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The condition that never matches",
+      "summary": "Condition key/operator never matches (literal * or aws:username on a role). Implicit deny.",
+      "time": "15 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/09-iam-condition-key.md"
+    },
+    {
+      "id": "aws-10-kms-missing",
+      "topic": "aws",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "S3 is allowed. The object is encrypted. GetObject is still denied.",
+      "summary": "S3 allowed; object is SSE-KMS. GetObject needs kms:Decrypt on the CMK.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/10-kms-missing.md"
+    },
+    {
+      "id": "aws-11-imdsv2",
+      "topic": "aws",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "IMDS works on the host and 401s in the container",
+      "summary": "IMDSv2 hop limit 1 drops the token PUT from a container. Host curl works; the task has no creds.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/11-imdsv2.md"
+    },
+    {
+      "id": "aws-12-cloudtrail-denied",
+      "topic": "aws",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "CloudTrail says ListBuckets. The policy says ListBucket.",
+      "summary": "aws s3 ls with no bucket is ListAllMyBuckets, not ListBucket. CloudTrail names the real API.",
+      "time": "15 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/12-cloudtrail-denied.md"
+    },
+    {
+      "id": "aws-13-permission-boundary",
+      "topic": "aws",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "AdministratorAccess, and the simulator still says implicitDeny",
+      "summary": "AdministratorAccess plus a developer permissions boundary. The ceiling wins.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/13-permission-boundary.md"
+    },
+    {
+      "id": "aws-14-scp-deny",
+      "topic": "aws",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "You are admin. The organisation is not.",
+      "summary": "Member-account admin cannot override an SCP Deny. IAM edits in the child change nothing.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/14-scp-deny.md"
+    },
+    {
+      "id": "aws-15-vpc-endpoint-policy",
+      "topic": "aws",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The security group is open. The VPC endpoint is not.",
+      "summary": "SG is open; the gateway endpoint policy allows only another bucket. S3 from the VPC is denied.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/15-vpc-endpoint-policy.md"
+    },
+    {
+      "id": "aws-16-rds-sg",
+      "topic": "aws",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The database times out on 3306. The instance is fine.",
+      "summary": "RDS SG still allows the old ECS group on 3306. The API uses a new SG; SYN times out.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/16-rds-sg.md"
+    },
+    {
+      "id": "aws-17-alb-health",
+      "topic": "aws",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The instance is healthy. The load balancer says it is not.",
+      "summary": "EC2 2/2 passed; target group checks the wrong port or path. Instance healthy, target not.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/17-alb-health.md"
+    },
+    {
+      "id": "aws-18-ecs-two-roles",
+      "topic": "aws",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The task role can read S3. The image never starts.",
+      "summary": "taskRole vs executionRole swapped. ECR pull uses execution; app S3 uses task.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/18-ecs-two-roles.md"
+    },
+    {
+      "id": "aws-19-public-access-block",
+      "topic": "aws",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The bucket policy is public. Block Public Access is on.",
+      "summary": "Bucket policy is public; Block Public Access still 403s. BPA is not a suggestion.",
+      "time": "15 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/19-public-access-block.md"
+    },
+    {
+      "id": "aws-20-secret-policy",
+      "topic": "aws",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "GetSecretValue denied by a policy you did not attach to the role",
+      "summary": "IAM allows GetSecretValue; the secret resource policy Denies everyone except an old role.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/20-secret-policy.md"
+    },
+    {
+      "id": "aws-21-nacl-ephemeral",
+      "topic": "aws",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "NACL allows 443 in. The reply never comes back.",
+      "summary": "Custom NACLs are stateless. Allowing 443 both ways still drops ephemeral return traffic.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/21-nacl-ephemeral.md"
+    },
+    {
+      "id": "aws-22-confused-deputy",
+      "topic": "aws",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The service can assume this role from any account",
+      "summary": "Service principal can AssumeRole from any account. Bind SourceArn/SourceAccount.",
+      "time": "25 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/22-confused-deputy.md"
+    },
+    {
+      "id": "aws-23-session-policy",
+      "topic": "aws",
+      "level": "expert",
+      "kind": "drill",
+      "title": "AssumeRole succeeded. Every API call after it is denied.",
+      "summary": "AssumeRole succeeded; a session policy intersected the session down to GetObject.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/23-session-policy.md"
+    },
+    {
+      "id": "aws-24-irsa",
+      "topic": "aws",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The pod's service account is not the one the role trusts",
+      "summary": "IRSA trust sub does not match the pod serviceaccount. AssumeRoleWithWebIdentity fails.",
+      "time": "25 min",
+      "prereqs": [
+        "aws-cli",
+        "kubernetes"
+      ],
+      "path": "scenarios/aws/24-irsa.md"
+    },
+    {
+      "id": "aws-25-kms-key-policy",
+      "topic": "aws",
+      "level": "expert",
+      "kind": "drill",
+      "title": "IAM allows kms:Decrypt. The key policy does not.",
+      "summary": "IAM allows kms:Decrypt; the CMK key policy does not name the role. KMS still denies.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/25-kms-key-policy.md"
+    },
+    {
+      "id": "aws-26-s3-kms-cross-account",
+      "topic": "aws",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Cross-account GetObject dies on a CMK you do not own",
+      "summary": "Cross-account GetObject: bucket policy and IAM allow; the CMK policy never named the reader.",
+      "time": "25 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/26-s3-kms-cross-account.md"
+    },
+    {
+      "id": "aws-27-lambda-vpc-nat",
+      "topic": "aws",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Lambda in a VPC times out talking to AWS",
+      "summary": "Lambda in private subnets, no NAT, no interface endpoints. AWS APIs time out.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/27-lambda-vpc-nat.md"
+    },
+    {
+      "id": "aws-28-cloudfront-oac",
+      "topic": "aws",
+      "level": "expert",
+      "kind": "drill",
+      "title": "CloudFront 403: leftover OAI, new OAC",
+      "summary": "Distribution uses OAC; bucket policy still names a deleted OAI. CloudFront 403.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/28-cloudfront-oac.md"
+    },
+    {
+      "id": "aws-29-sts-external-id",
+      "topic": "aws",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The vendor cannot assume the role without ExternalId",
+      "summary": "Vendor trust is right; sts:ExternalId is still the staging value.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/29-sts-external-id.md"
+    },
+    {
+      "id": "aws-30-resource-vs-identity",
+      "topic": "aws",
+      "level": "expert",
+      "kind": "drill",
+      "title": "You updated IAM. Nobody updated the resource policy.",
+      "summary": "Cross-account SQS/S3/KMS needs identity AND resource policy. Only one side was updated.",
+      "time": "20 min",
+      "prereqs": [
+        "aws-cli"
+      ],
+      "path": "scenarios/aws/30-resource-vs-identity.md"
+    },
+    {
+      "id": "jenkins-01-green-but-no-tests",
+      "topic": "jenkins",
+      "level": "beginner",
+      "title": "The build is green and the tests never ran",
+      "summary": "Six weeks of passing builds, and a failing test printed in every single log. Three lines make failure impossible to report.",
+      "time": "35 min",
+      "prereqs": [
+        "jenkins",
+        "docker"
+      ],
+      "path": "scenarios/jenkins/01-green-but-no-tests.md"
+    },
+    {
+      "id": "jenkins-02-works-on-controller",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "title": "Works on the controller, fails on the agent",
+      "summary": "The job fails half the time and re-running fixes it. Nothing is random: it depends entirely on which executor picked it up.",
+      "time": "45 min",
+      "prereqs": [
+        "jenkins",
+        "jenkins agent"
+      ],
+      "path": "scenarios/jenkins/02-works-on-controller.md"
+    },
+    {
+      "id": "jenkins-03-pipeline-hangs",
+      "topic": "jenkins",
+      "level": "expert",
+      "title": "The pipeline that never finishes",
+      "summary": "Nine hours in, holding three executors, with every other job queued behind it. Find what it is waiting for and make it impossible.",
+      "time": "55 min",
+      "prereqs": [
+        "jenkins",
+        "2 executors"
+      ],
+      "path": "scenarios/jenkins/03-pipeline-hangs.md"
+    },
+    {
+      "id": "jenkins-04-stuck-in-queue",
+      "topic": "jenkins",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The build that sits in the queue forever",
+      "summary": "Pending 'waiting for next available executor' while agents sit idle. The job asks for a label no agent advertises.",
+      "time": "15 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/04-stuck-in-queue.md"
+    },
+    {
+      "id": "jenkins-05-dirty-workspace",
+      "topic": "jenkins",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The build that sees last week's files",
+      "summary": "A packaging job ships files deleted weeks ago. Workspaces are reused and never cleaned between runs.",
+      "time": "15 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/05-dirty-workspace.md"
+    },
+    {
+      "id": "jenkins-06-script-permission",
+      "topic": "jenkins",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Permission denied running a script from the repo",
+      "summary": "./build.sh runs on your laptop and fails in Jenkins. The execute bit was not preserved in git.",
+      "time": "15 min",
+      "prereqs": [
+        "jenkins",
+        "git"
+      ],
+      "path": "scenarios/jenkins/06-script-permission.md"
+    },
+    {
+      "id": "jenkins-07-env-not-expanding",
+      "topic": "jenkins",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The variable that is empty in the shell step",
+      "summary": "An env var is empty in sh, and switching to double quotes leaks a token into the log. Groovy vs shell expansion.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/07-env-not-expanding.md"
+    },
+    {
+      "id": "jenkins-08-declarative-syntax",
+      "topic": "jenkins",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The Jenkinsfile that will not compile",
+      "summary": "A wall of Groovy errors before any stage runs. Declarative and scripted syntax were mixed and steps misplaced.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/08-declarative-syntax.md"
+    },
+    {
+      "id": "jenkins-09-credential-not-found",
+      "topic": "jenkins",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "credentials(...) fails with 'Could not find credentials'",
+      "summary": "The credential exists in the UI and the job cannot find it. The ID does not match, character for character.",
+      "time": "15 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/09-credential-not-found.md"
+    },
+    {
+      "id": "jenkins-10-parameters-first-run",
+      "topic": "jenkins",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The parameters that are not there on the first build",
+      "summary": "New parameters are ignored on the first run and empty values slip through. Parameter defs register only after a build.",
+      "time": "15 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/10-parameters-first-run.md"
+    },
+    {
+      "id": "jenkins-11-artifacts-not-found",
+      "topic": "jenkins",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "archiveArtifacts finds nothing to archive",
+      "summary": "The file is created but no artifact appears. The archive pattern is resolved relative to the workspace root.",
+      "time": "15 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/11-artifacts-not-found.md"
+    },
+    {
+      "id": "jenkins-12-no-trigger",
+      "topic": "jenkins",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Pushes to the repo do not trigger a build",
+      "summary": "The job only runs when clicked. It has no trigger, and the webhook route fails silently if Jenkins is unreachable.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins",
+        "git"
+      ],
+      "path": "scenarios/jenkins/12-no-trigger.md"
+    },
+    {
+      "id": "jenkins-13-parallel-workspace-clash",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Parallel stages overwrite each other's files",
+      "summary": "Parallel build variants ship the wrong binary intermittently. The branches share one workspace and race on filenames.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/13-parallel-workspace-clash.md"
+    },
+    {
+      "id": "jenkins-14-shared-library",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The shared library that will not load",
+      "summary": "deployHelper() fails with No such DSL method though the library exists. It is never imported with @Library.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/14-shared-library.md"
+    },
+    {
+      "id": "jenkins-15-when-condition",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The stage that never runs, and the one that always does",
+      "summary": "A when-branch-main deploy never runs and a failure-only cleanup runs every time. Wrong branch string, wrong construct.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/15-when-condition.md"
+    },
+    {
+      "id": "jenkins-16-stash-across-agents",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Files vanish between stages on different agents",
+      "summary": "Build on one agent, deploy on another, and the artifact is gone. Each agent has its own workspace; use stash/unstash.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins",
+        "2 agents"
+      ],
+      "path": "scenarios/jenkins/16-stash-across-agents.md"
+    },
+    {
+      "id": "jenkins-17-docker-agent-uid",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The Docker-agent build writes root-owned files",
+      "summary": "A container agent leaves root-owned files that wedge later builds. Run the container as the Jenkins agent user.",
+      "time": "25 min",
+      "prereqs": [
+        "jenkins",
+        "docker"
+      ],
+      "path": "scenarios/jenkins/17-docker-agent-uid.md"
+    },
+    {
+      "id": "jenkins-18-matrix-single-cell",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The matrix build that runs one combination",
+      "summary": "A 3x2 matrix runs a single cell and ignores the axis values. Single-value axes collapse the product.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/18-matrix-single-cell.md"
+    },
+    {
+      "id": "jenkins-19-retry-no-backoff",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The retry that hammers a flaky step to death",
+      "summary": "retry(100) with no backoff or timeout calls a struggling service a hundred times in seconds. Bound and back off.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/19-retry-no-backoff.md"
+    },
+    {
+      "id": "jenkins-20-junit-not-recorded",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Test results never appear in the trend graph",
+      "summary": "Tests run but the trend is empty and failures are not listed. Wrong junit path, and publishing skipped on failure.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/20-junit-not-recorded.md"
+    },
+    {
+      "id": "jenkins-21-downstream-parameters",
+      "topic": "jenkins",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The downstream job that ignores the version you passed",
+      "summary": "An upstream build triggers a deploy that always ships 'latest'. Parameters were never passed to the build step.",
+      "time": "20 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/21-downstream-parameters.md"
+    },
+    {
+      "id": "jenkins-22-disk-fills-history",
+      "topic": "jenkins",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The build server that fills its own disk and stops",
+      "summary": "The controller stops scheduling: disk full of two years of build history. Nothing was ever set to discard old builds.",
+      "time": "25 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/22-disk-fills-history.md"
+    },
+    {
+      "id": "jenkins-23-script-security-sandbox",
+      "topic": "jenkins",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The pipeline rejected by the script security sandbox",
+      "summary": "After an upgrade, unchanged Groovy fails with RejectedAccessException. Use sandbox-safe pipeline steps, not approvals.",
+      "time": "25 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/23-script-security-sandbox.md"
+    },
+    {
+      "id": "jenkins-24-cron-overlap",
+      "topic": "jenkins",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The nightly job that misses runs and doubles up",
+      "summary": "A cron job overlaps itself and every job fires at exactly 02:00. Prevent concurrency and use H to spread load.",
+      "time": "25 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/24-cron-overlap.md"
+    },
+    {
+      "id": "jenkins-25-agent-goes-offline",
+      "topic": "jenkins",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The agent that keeps going offline",
+      "summary": "An agent drops several times a day with ping timeouts. It is OOM-killed, clock-drifted, and overcommitted, not networked.",
+      "time": "30 min",
+      "prereqs": [
+        "jenkins",
+        "jenkins agent"
+      ],
+      "path": "scenarios/jenkins/25-agent-goes-offline.md"
+    },
+    {
+      "id": "jenkins-26-no-rollback",
+      "topic": "jenkins",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The deploy that cannot be undone",
+      "summary": "In-place overwrite destroys the previous release and records nothing. Rebuild deploy around versioned releases and a symlink.",
+      "time": "30 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/26-no-rollback.md"
+    },
+    {
+      "id": "jenkins-27-pr-build-credential-theft",
+      "topic": "jenkins",
+      "level": "expert",
+      "kind": "drill",
+      "title": "A pull request build that can steal your credentials",
+      "summary": "Fork PRs build automatically with deploy secrets in scope, so a PR can print them. Separate trusted and untrusted paths.",
+      "time": "30 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/27-pr-build-credential-theft.md"
+    },
+    {
+      "id": "jenkins-28-monolith-refactor",
+      "topic": "jenkins",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The 900-line Jenkinsfile nobody dares change",
+      "summary": "One file, eight jobs of conditional sprawl and copy-paste. Data-drive the target and extract steps to a shared library.",
+      "time": "35 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/28-monolith-refactor.md"
+    },
+    {
+      "id": "jenkins-29-deploy-before-tests",
+      "topic": "jenkins",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The pipeline that deploys before the tests finish",
+      "summary": "wait:false and split jobs let deploy run while tests are still going. Make the ordering structural and propagate failure.",
+      "time": "25 min",
+      "prereqs": [
+        "jenkins"
+      ],
+      "path": "scenarios/jenkins/29-deploy-before-tests.md"
+    },
+    {
+      "id": "jenkins-30-works-locally-fails-ci",
+      "topic": "jenkins",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The build passes locally and fails only in the pipeline",
+      "summary": "A date test and an order-dependent test are green locally, red in CI. Pin the environment and make tests independent.",
+      "time": "30 min",
+      "prereqs": [
+        "jenkins",
+        "python3"
+      ],
+      "path": "scenarios/jenkins/30-works-locally-fails-ci.md"
+    },
+    {
+      "id": "gitops-01-drift-reverted",
+      "topic": "gitops",
+      "level": "beginner",
+      "title": "The fix that keeps undoing itself",
+      "summary": "You scaled the deployment during an incident. Four minutes later it was back. Something is fighting you, and it was installed on purpose.",
+      "time": "35 min",
+      "prereqs": [
+        "kubectl",
+        "cluster",
+        "argocd",
+        "git repo"
+      ],
+      "path": "scenarios/gitops/01-drift-reverted.md"
+    },
+    {
+      "id": "gitops-02-prune-and-waves",
+      "topic": "gitops",
+      "level": "intermediate",
+      "title": "Deleted from git, still running in production",
+      "summary": "A resource removed three months ago is still in the cluster, and Argo says Synced. Meanwhile every fresh install fails on ordering.",
+      "time": "45 min",
+      "prereqs": [
+        "kubectl",
+        "cluster",
+        "argocd",
+        "git repo"
+      ],
+      "path": "scenarios/gitops/02-prune-and-waves.md"
+    },
+    {
+      "id": "gitops-03-sync-loop",
+      "topic": "gitops",
+      "level": "expert",
+      "title": "The application that redeploys every three minutes",
+      "summary": "4,812 syncs in ten days with no commits. Two controllers disagree about who owns a field, and pods restart all day because of it.",
+      "time": "55 min",
+      "prereqs": [
+        "kubectl",
+        "cluster",
+        "argocd",
+        "metrics-server"
+      ],
+      "path": "scenarios/gitops/03-sync-loop.md"
+    },
+    {
+      "id": "gitops-04-autosync-off",
+      "topic": "gitops",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The merge that never reached the cluster",
+      "summary": "Git merged; the cluster still runs last week's image. Auto-sync, prune, and selfHeal are off.",
+      "time": "15 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/04-autosync-off.md"
+    },
+    {
+      "id": "gitops-05-wrong-path",
+      "topic": "gitops",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The Application that syncs nothing from a full repo",
+      "summary": "spec.source.path points at a missing or empty directory. Argo is Synced with zero resources.",
+      "time": "15 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/05-wrong-path.md"
+    },
+    {
+      "id": "gitops-06-target-revision",
+      "topic": "gitops",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Tracking main locally, shipping staging in the cluster",
+      "summary": "Application targetRevision is staging or a stale SHA while the laptop tracks main.",
+      "time": "15 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/06-target-revision.md"
+    },
+    {
+      "id": "gitops-07-dest-namespace",
+      "topic": "gitops",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Destination shop, live objects in default",
+      "summary": "metadata.namespace in the manifest wins over destination.namespace; workloads land in default.",
+      "time": "15 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/07-dest-namespace.md"
+    },
+    {
+      "id": "gitops-08-appproject-deny",
+      "topic": "gitops",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The repo is fine; the project refuses it",
+      "summary": "AppProject sourceRepos or destinations block the git URL, cluster, or namespace.",
+      "time": "15 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/08-appproject-deny.md"
+    },
+    {
+      "id": "gitops-09-directory-recurse",
+      "topic": "gitops",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Nested overlays exist in git and never sync",
+      "summary": "directory.recurse is false, so nested env/ overlays never become desired state.",
+      "time": "15 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/09-directory-recurse.md"
+    },
+    {
+      "id": "gitops-10-helm-values",
+      "topic": "gitops",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "values.yaml bumped the tag; the cluster did not",
+      "summary": "Application helm.parameters override values.yaml, so the image tag in git never applies.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/10-helm-values.md"
+    },
+    {
+      "id": "gitops-11-tracking-id",
+      "topic": "gitops",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "OutOfSync extras that git never declared",
+      "summary": "A kubectl-applied object lacks Argo tracking labels and shows as an extra/orphan.",
+      "time": "15 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/11-tracking-id.md"
+    },
+    {
+      "id": "gitops-12-create-namespace",
+      "topic": "gitops",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Destination namespace does not exist",
+      "summary": "Dest namespace does not exist until CreateNamespace or a Namespace manifest.",
+      "time": "15 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/12-create-namespace.md"
+    },
+    {
+      "id": "gitops-13-sync-window",
+      "topic": "gitops",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Manual sync refused during a deny window",
+      "summary": "An AppProject deny window blocks auto and manual sync while the fix sits on main.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/13-sync-window.md"
+    },
+    {
+      "id": "gitops-14-skip-reconcile",
+      "topic": "gitops",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Git changed; Argo skipped the object on purpose",
+      "summary": "reconcile: skip or IgnoreExtraneous hides an object so git changes never apply.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/14-skip-reconcile.md"
+    },
+    {
+      "id": "gitops-15-helm-hook",
+      "topic": "gitops",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The Helm pre-install Job that never runs on the upgrade",
+      "summary": "helm.sh/hook: pre-install runs only on first install; later syncs skip migrations.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/15-helm-hook.md"
+    },
+    {
+      "id": "gitops-16-applicationset",
+      "topic": "gitops",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "ApplicationSet never created the EU app",
+      "summary": "ApplicationSet generator glob or cluster selector never emits one cluster; that app is missing.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/16-applicationset.md"
+    },
+    {
+      "id": "gitops-17-argocd-rbac",
+      "topic": "gitops",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Local user can see the app and cannot sync it",
+      "summary": "policy.csv grants get but not sync. Argo RBAC is not Kubernetes RBAC.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/17-argocd-rbac.md"
+    },
+    {
+      "id": "gitops-18-multi-source",
+      "topic": "gitops",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Multi-source ref name does not match $values",
+      "summary": "Multi-source ref name does not match $values; Helm never mounts the git values file.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/18-multi-source.md"
+    },
+    {
+      "id": "gitops-19-refresh-cache",
+      "topic": "gitops",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Git moved; Argo's compare cache did not",
+      "summary": "Soft refresh still renders cached manifests; hard refresh invalidates repo-server cache.",
+      "time": "15 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/19-refresh-cache.md"
+    },
+    {
+      "id": "gitops-20-kustomize-overlay",
+      "topic": "gitops",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Prod Application pointed at the dev overlay",
+      "summary": "Prod Application path is overlays/dev so prod image and replica patches never apply.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/20-kustomize-overlay.md"
+    },
+    {
+      "id": "gitops-21-sync-option-replace",
+      "topic": "gitops",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Immutable Service field: apply is not enough",
+      "summary": "Immutable Service field cannot be patched; Replace=true lets the controller recreate it.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/21-sync-option-replace.md"
+    },
+    {
+      "id": "gitops-22-finalizer-stuck",
+      "topic": "gitops",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Application deletion hangs on the finalizer",
+      "summary": "Application deletion hangs on resources-finalizer; a child will not die.",
+      "time": "25 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/22-finalizer-stuck.md"
+    },
+    {
+      "id": "gitops-23-app-of-apps",
+      "topic": "gitops",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Parent app is Synced; the child Application was never created",
+      "summary": "Parent is Synced; child Application CR was never rendered (path/recurse/wave).",
+      "time": "25 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/23-app-of-apps.md"
+    },
+    {
+      "id": "gitops-24-cluster-secret",
+      "topic": "gitops",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Destination server URL does not match any cluster secret",
+      "summary": "destination.server/name does not match the cluster Secret. Unknown cluster.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/24-cluster-secret.md"
+    },
+    {
+      "id": "gitops-25-repo-creds",
+      "topic": "gitops",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Private repo, 401, credentials Secret does not match the URL",
+      "summary": "Private repo 401: HTTPS vs SSH, helm vs git type, or URL mismatch on the creds Secret.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/25-repo-creds.md"
+    },
+    {
+      "id": "gitops-26-crd-wave",
+      "topic": "gitops",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Custom resource applied before the CRD is established",
+      "summary": "CR applied before the CRD is Established. Put CRDs on an earlier sync wave.",
+      "time": "25 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/26-crd-wave.md"
+    },
+    {
+      "id": "gitops-27-status-vs-git",
+      "topic": "gitops",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Git is quiet; the app is Progressing forever",
+      "summary": "Git is quiet; Health Progressing: controller timeout or a workload that never becomes Ready.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/27-status-vs-git.md"
+    },
+    {
+      "id": "gitops-28-diff-normalize",
+      "topic": "gitops",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Phantom diffs from last-applied vs server-side apply",
+      "summary": "Phantom diffs from last-applied vs server-side apply \u2014 not a two-controller sync loop.",
+      "time": "25 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/28-diff-normalize.md"
+    },
+    {
+      "id": "gitops-29-notifications",
+      "topic": "gitops",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Sync failed and nobody was notified",
+      "summary": "Trigger watches on-sync-succeeded so a Failed sync never fires the webhook.",
+      "time": "20 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/29-notifications.md"
+    },
+    {
+      "id": "gitops-30-appset-blast-radius",
+      "topic": "gitops",
+      "level": "expert",
+      "kind": "drill",
+      "title": "ApplicationSet rolled the bad app to every cluster",
+      "summary": "applicationsSync: sync with no RollingSync ships a bad template to every cluster at once.",
+      "time": "25 min",
+      "prereqs": [
+        "kubernetes",
+        "argocd"
+      ],
+      "path": "scenarios/gitops/30-appset-blast-radius.md"
+    },
+    {
+      "id": "actions-01-workflow-never-runs",
+      "topic": "actions",
+      "level": "beginner",
+      "title": "The workflow that never runs",
+      "summary": "No run, no error, no annotation. Four separate reasons GitHub is ignoring your file, and not one of them produces a log.",
+      "time": "30 min",
+      "prereqs": [
+        "github repo",
+        "git"
+      ],
+      "path": "scenarios/actions/01-workflow-never-runs.md"
+    },
+    {
+      "id": "actions-02-cache-and-secrets",
+      "topic": "actions",
+      "level": "intermediate",
+      "title": "The cache that never hits and the secret that is not there",
+      "summary": "Caching was added and builds got slower. Fork pull requests fail with an empty credential. Both problems report themselves as success.",
+      "time": "40 min",
+      "prereqs": [
+        "github repo",
+        "gh cli"
+      ],
+      "path": "scenarios/actions/02-cache-and-secrets.md"
+    },
+    {
+      "id": "actions-03-oidc-supply-chain",
+      "topic": "actions",
+      "level": "expert",
+      "title": "The deploy job that cannot get credentials",
+      "summary": "Keyless AWS auth fails with AssumeRoleWithWebIdentity denied. Three faults in the identity chain, plus two a security review would block.",
+      "time": "60 min",
+      "prereqs": [
+        "github repo",
+        "aws-cli",
+        "aws account"
+      ],
+      "path": "scenarios/actions/03-oidc-supply-chain.md"
+    },
+    {
+      "id": "actions-04-workflow-dispatch-only",
+      "topic": "actions",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The workflow only runs when I click the button",
+      "summary": "on: workflow_dispatch replaced push; it does not add to a default. List every event you need.",
+      "time": "15 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/04-workflow-dispatch-only.md"
+    },
+    {
+      "id": "actions-05-paths-filter-skip",
+      "topic": "actions",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "paths: I changed the app and CI did not run",
+      "summary": "Path filters skip the workflow; required checks then wait forever. Include real app paths and the workflow file.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/05-paths-filter-skip.md"
+    },
+    {
+      "id": "actions-06-matrix-fail-fast",
+      "topic": "actions",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The matrix cancelled the good jobs",
+      "summary": "fail-fast defaults to true. One cell fails, siblings cancel. Set fail-fast: false to see the rest.",
+      "time": "15 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/06-matrix-fail-fast.md"
+    },
+    {
+      "id": "actions-07-checkout-merge-ref",
+      "topic": "actions",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "checkout tested the merge commit, not my branch",
+      "summary": "pull_request checkout is a merge into the base. Log github.sha vs head.sha; reproduce with merge locally.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/07-checkout-merge-ref.md"
+    },
+    {
+      "id": "actions-08-github-token-permissions",
+      "topic": "actions",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "GITHUB_TOKEN cannot push the release tag",
+      "summary": "contents: read cannot git push. Grant contents: write on the releasing job only.",
+      "time": "15 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/08-github-token-permissions.md"
+    },
+    {
+      "id": "actions-09-secret-name-case",
+      "topic": "actions",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "secrets.* is empty in env: but I set the secret",
+      "summary": "Secret names are case-sensitive; environment secrets need environment:. Map into env: and test -n.",
+      "time": "15 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/09-secret-name-case.md"
+    },
+    {
+      "id": "actions-10-needs-skipped",
+      "topic": "actions",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "needs: skipped the deploy because the tests were skipped",
+      "summary": "Skipped needs are not success(). Use always() and needs.x.result, or stop skipping the test job.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/10-needs-skipped.md"
+    },
+    {
+      "id": "actions-11-artifact-not-found",
+      "topic": "actions",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "upload-artifact says no files found",
+      "summary": "Wrong path, and the next job is a new VM. Upload the real glob; download-artifact in the consumer.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/11-artifact-not-found.md"
+    },
+    {
+      "id": "actions-12-concurrency-cancel",
+      "topic": "actions",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "concurrency cancelled the deploy I needed",
+      "summary": "cancel-in-progress is right for PR CI and wrong for production. Queue prod; cancel feature branches.",
+      "time": "15 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/12-concurrency-cancel.md"
+    },
+    {
+      "id": "actions-13-reusable-workflow-inputs",
+      "topic": "actions",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The reusable workflow could not see the input",
+      "summary": "with: keys must match workflow_call inputs; secrets go in secrets: not with:. Schema is strict.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/13-reusable-workflow-inputs.md"
+    },
+    {
+      "id": "actions-14-composite-missing-shell",
+      "topic": "actions",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The composite action did not run my setup",
+      "summary": "Composite run: steps require shell:. Use github.action_path and GITHUB_OUTPUT for outputs.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/14-composite-missing-shell.md"
+    },
+    {
+      "id": "actions-15-cache-restore-keys",
+      "topic": "actions",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "restore-keys hit a cache from another OS",
+      "summary": "Short restore-keys prefix-match stale or foreign caches. Hash lockfiles; never restore-keys: runner.os- alone.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/15-cache-restore-keys.md"
+    },
+    {
+      "id": "actions-16-self-hosted-labels",
+      "topic": "actions",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The self-hosted runner job sat queued forever",
+      "summary": "runs-on labels are AND. A missing gpu label queues forever. Match live runner labels.",
+      "time": "15 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/16-self-hosted-labels.md"
+    },
+    {
+      "id": "actions-17-environment-protection",
+      "topic": "actions",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The environment gate waited for a reviewer who did not exist",
+      "summary": "Required reviewers left the org; environment secrets are invisible without environment:.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/17-environment-protection.md"
+    },
+    {
+      "id": "actions-18-if-failure-continue",
+      "topic": "actions",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "if: failure() never ran because the job was skipped",
+      "summary": "Step failure() is previous steps in this job. continue-on-error makes the job succeed. Notify in a needs job.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/18-if-failure-continue.md"
+    },
+    {
+      "id": "actions-19-matrix-include-exclude",
+      "topic": "actions",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "matrix include replaced the whole matrix",
+      "summary": "include without base arrays is only those rows. Cartesian product plus include/exclude; empty matrix is a silent pass.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/19-matrix-include-exclude.md"
+    },
+    {
+      "id": "actions-20-artifact-retention",
+      "topic": "actions",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The artifact expired before the manual deploy",
+      "summary": "download-artifact without run-id looks at this run. Pass the build run-id; raise retention or rebuild.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/20-artifact-retention.md"
+    },
+    {
+      "id": "actions-21-dependabot-secrets",
+      "topic": "actions",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Dependabot PRs cannot read secrets and cannot trigger workflows",
+      "summary": "Dependabot pull_request is untrusted. Do not use pull_request_target to grab NPM_TOKEN; use public CI or Dependabot registries.",
+      "time": "25 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/21-dependabot-secrets.md"
+    },
+    {
+      "id": "actions-22-pull-request-target",
+      "topic": "actions",
+      "level": "expert",
+      "kind": "drill",
+      "title": "pull_request_target checked out the fork and kept the secrets",
+      "summary": "Privileged event plus checkout of head.sha runs attacker code with base secrets. Never combine them.",
+      "time": "30 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/22-pull-request-target.md"
+    },
+    {
+      "id": "actions-23-secrets-inherit",
+      "topic": "actions",
+      "level": "expert",
+      "kind": "drill",
+      "title": "secrets: inherit passed production into a docs workflow",
+      "summary": "inherit is every caller secret, not the callee schema. Map explicit keys; ban printenv in callees.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/23-secrets-inherit.md"
+    },
+    {
+      "id": "actions-24-oidc-reusable-sub",
+      "topic": "actions",
+      "level": "expert",
+      "kind": "drill",
+      "title": "OIDC worked in CI.yml and failed in the reusable workflow",
+      "summary": "job_workflow_ref replaces ref: in sub. Trust the callee workflow SHA, and keep id-token: write on that job.",
+      "time": "30 min",
+      "prereqs": [
+        "github repo",
+        "aws-cli"
+      ],
+      "path": "scenarios/actions/24-oidc-reusable-sub.md"
+    },
+    {
+      "id": "actions-25-unpinned-action-tags",
+      "topic": "actions",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The action tag moved and CI started shipping malware-shaped code",
+      "summary": "uses: ...@v4 and @master are mutable. Pin full SHAs; let Dependabot bump them.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/25-unpinned-action-tags.md"
+    },
+    {
+      "id": "actions-26-expression-injection",
+      "topic": "actions",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The PR title became a bash command",
+      "summary": "${{ github.event.pull_request.title }} in run: is interpolated as code. Pass untrusted fields via env:.",
+      "time": "25 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/26-expression-injection.md"
+    },
+    {
+      "id": "actions-27-cache-quota",
+      "topic": "actions",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The cache grew to 10 GB and every job missed",
+      "summary": "Unbounded paths and github.sha in the key never hit and evict useful caches. Hash lockfiles; split by tool.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/27-cache-quota.md"
+    },
+    {
+      "id": "actions-28-merge-queue-checks",
+      "topic": "actions",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Merge queue says required check is missing",
+      "summary": "on: pull_request does not run on merge_group. Add the event and keep the check name identical.",
+      "time": "25 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/28-merge-queue-checks.md"
+    },
+    {
+      "id": "actions-29-persist-credentials",
+      "topic": "actions",
+      "level": "expert",
+      "kind": "drill",
+      "title": "persist-credentials left a GITHUB_TOKEN in a downstream container",
+      "summary": "checkout stores the token in .git/config. Disable persist on build jobs; dockerignore .git.",
+      "time": "20 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/29-persist-credentials.md"
+    },
+    {
+      "id": "actions-30-reusable-check-name",
+      "topic": "actions",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The reusable workflow could not write checks, so the PR stayed yellow",
+      "summary": "Central CI posts checks on the wrong repo or under a different job name. Name the caller job to match the ruleset.",
+      "time": "25 min",
+      "prereqs": [
+        "github repo"
+      ],
+      "path": "scenarios/actions/30-reusable-check-name.md"
+    },
+    {
+      "id": "net-01-dns-vs-connectivity",
+      "topic": "networking",
+      "level": "beginner",
+      "title": "The site is down, but ping works",
+      "summary": "The host answers ICMP and the service is healthy, and the user still cannot load the page. Learn which tool tests which layer.",
+      "time": "30 min",
+      "prereqs": [
+        "linux",
+        "curl",
+        "dig"
+      ],
+      "path": "scenarios/networking/01-dns-vs-connectivity.md"
+    },
+    {
+      "id": "net-02-proxy-and-tls",
+      "topic": "networking",
+      "level": "intermediate",
+      "title": "Certificate errors behind the corporate proxy",
+      "summary": "CERTIFICATE_VERIFY_FAILED, and the team's fix is curl -k. Trust the interception properly instead of switching off verification.",
+      "time": "45 min",
+      "prereqs": [
+        "linux",
+        "openssl",
+        "python3"
+      ],
+      "path": "scenarios/networking/02-proxy-and-tls.md"
+    },
+    {
+      "id": "net-03-hangs-on-large-responses",
+      "topic": "networking",
+      "level": "expert",
+      "title": "Small requests work, large ones hang forever",
+      "summary": "Under 1400 bytes always succeeds, above it never returns. Every layer reports success while a router silently drops your packets.",
+      "time": "60 min",
+      "prereqs": [
+        "linux",
+        "sudo",
+        "tcpdump"
+      ],
+      "path": "scenarios/networking/03-hangs-on-large-responses.md"
+    },
+    {
+      "id": "net-04-refused-vs-timeout",
+      "topic": "networking",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Connection refused in staging, timeout in production",
+      "summary": "RST means nothing is listening; silence means the packet never came back. Same 'down' ticket, two toolboxes.",
+      "time": "15 min",
+      "prereqs": [
+        "linux",
+        "curl"
+      ],
+      "path": "scenarios/networking/04-refused-vs-timeout.md"
+    },
+    {
+      "id": "net-05-wrong-port",
+      "topic": "networking",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The dashboard is up on the box, curl from my laptop says connection refused",
+      "summary": "localhost:8080 is not http://host on port 80. Listen where the URL actually points, or put a proxy there.",
+      "time": "15 min",
+      "prereqs": [
+        "linux",
+        "curl"
+      ],
+      "path": "scenarios/networking/05-wrong-port.md"
+    },
+    {
+      "id": "net-06-firewall-drop",
+      "topic": "networking",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "ss shows it listening, curl from the other subnet times out",
+      "summary": "Listening is not reachable. Localhost never hits INPUT the way eth0 does. Find the DROP.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "iptables"
+      ],
+      "path": "scenarios/networking/06-firewall-drop.md"
+    },
+    {
+      "id": "net-07-ipv6-aaaa",
+      "topic": "networking",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "dig returns an address, curl hangs, ping6 is the thing that actually fails",
+      "summary": "AAAA without a routed v6 prefix is an outage. Query both families; curl -6 isolates the path.",
+      "time": "15 min",
+      "prereqs": [
+        "linux",
+        "dig",
+        "curl"
+      ],
+      "path": "scenarios/networking/07-ipv6-aaaa.md"
+    },
+    {
+      "id": "net-08-nxdomain-vs-servfail",
+      "topic": "networking",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "One client says NXDOMAIN, another says SERVFAIL, the name is in the zone file",
+      "summary": "NXDOMAIN is denial (often a rewritten question). SERVFAIL is 'I could not answer'. Read the QUESTION section.",
+      "time": "15 min",
+      "prereqs": [
+        "linux",
+        "dig"
+      ],
+      "path": "scenarios/networking/08-nxdomain-vs-servfail.md"
+    },
+    {
+      "id": "net-09-resolved-stale-cache",
+      "topic": "networking",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "I updated the A record five minutes ago and this box still hits the old IP",
+      "summary": "dig talks to a nameserver; curl uses NSS. /etc/hosts and stub caches beat the zone.",
+      "time": "15 min",
+      "prereqs": [
+        "linux",
+        "dig"
+      ],
+      "path": "scenarios/networking/09-resolved-stale-cache.md"
+    },
+    {
+      "id": "net-10-http-on-https-port",
+      "topic": "networking",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "curl http:// works on my laptop and talks garbage in the cluster",
+      "summary": "Cleartext HTTP on a TLS port is a protocol mismatch. Health probes inherit this constantly.",
+      "time": "15 min",
+      "prereqs": [
+        "linux",
+        "curl",
+        "openssl"
+      ],
+      "path": "scenarios/networking/10-http-on-https-port.md"
+    },
+    {
+      "id": "net-11-missing-default-route",
+      "topic": "networking",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "The host can ping its neighbour and cannot reach the internet",
+      "summary": "On-link success is not a default route. ip route get tells you before you debug TLS.",
+      "time": "15 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/networking/11-missing-default-route.md"
+    },
+    {
+      "id": "net-12-traceroute-lies",
+      "topic": "networking",
+      "level": "beginner",
+      "kind": "drill",
+      "title": "Traceroute dies at hop 3, so they opened a change to replace the router \u2014 TCP still works",
+      "summary": "Stars are missing probe replies, not a down core. Believe TCP to the service port first.",
+      "time": "15 min",
+      "prereqs": [
+        "linux",
+        "curl"
+      ],
+      "path": "scenarios/networking/12-traceroute-lies.md"
+    },
+    {
+      "id": "net-13-ip-forward-off",
+      "topic": "networking",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The router has two interfaces and packets die in the kernel",
+      "summary": "NAT rules do nothing if ip_forward is 0. tcpdump in without out is forwarding or FORWARD policy.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "iptables"
+      ],
+      "path": "scenarios/networking/13-ip-forward-off.md"
+    },
+    {
+      "id": "net-14-iptables-rule-order",
+      "topic": "networking",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The allow rule is in the list and the packet still dies",
+      "summary": "First match wins. Zero counters on your ACCEPT means an earlier DROP ate the flow.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "iptables"
+      ],
+      "path": "scenarios/networking/14-iptables-rule-order.md"
+    },
+    {
+      "id": "net-15-masquerade-missing",
+      "topic": "networking",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Packets leave with a private source and the next hop throws them away",
+      "summary": "Forwarding without SNAT leaks RFC1918 onto a network that will not route it back.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "iptables",
+        "tcpdump"
+      ],
+      "path": "scenarios/networking/15-masquerade-missing.md"
+    },
+    {
+      "id": "net-16-tls-sni-mismatch",
+      "topic": "networking",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The certificate is valid and curl still says the name does not match",
+      "summary": "Trust and identity are separate. Curl-by-IP and missing SNI pick the wrong name or vhost.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "openssl",
+        "curl"
+      ],
+      "path": "scenarios/networking/16-tls-sni-mismatch.md"
+    },
+    {
+      "id": "net-17-cert-san-hostname",
+      "topic": "networking",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "openssl s_client says verify return code 0 and the browser still warns",
+      "summary": "If SAN is present, CN is not used. A pretty wildcard CN with the wrong SAN still fails.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "openssl",
+        "curl"
+      ],
+      "path": "scenarios/networking/17-cert-san-hostname.md"
+    },
+    {
+      "id": "net-18-lb-idle-timeout",
+      "topic": "networking",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Short API calls work, the upload dies at 61 seconds every time",
+      "summary": "Failures clustered at 60s or 350s are a middlebox timer. Bypass the LB once to see whose clock.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "curl"
+      ],
+      "path": "scenarios/networking/18-lb-idle-timeout.md"
+    },
+    {
+      "id": "net-19-split-horizon-dns",
+      "topic": "networking",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "Public DNS has the right answer and the office still hits the old private IP",
+      "summary": "Same qname, two RRsets. Update the private view; public TTL will not save you.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "dig"
+      ],
+      "path": "scenarios/networking/19-split-horizon-dns.md"
+    },
+    {
+      "id": "net-20-xff-spoofed-client-ip",
+      "topic": "networking",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The ban hammer hit the load balancer, and attackers still get through",
+      "summary": "X-Forwarded-For is a claim. Honour it only from hops you own; TCP source is what the client cannot spoof.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "nginx"
+      ],
+      "path": "scenarios/networking/20-xff-spoofed-client-ip.md"
+    },
+    {
+      "id": "net-21-udp-service-tcp-healthcheck",
+      "topic": "networking",
+      "level": "intermediate",
+      "kind": "drill",
+      "title": "The UDP service is up and the load balancer keeps taking it out of rotation",
+      "summary": "UDP/53 is not TCP/53. Default TCP health checks empty a DNS pool that still answers dig.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "dig"
+      ],
+      "path": "scenarios/networking/21-udp-service-tcp-healthcheck.md"
+    },
+    {
+      "id": "net-22-vxlan-overlay-mtu",
+      "topic": "networking",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Pod-to-pod is fine, crossing the overlay dies at 1420-byte payloads \u2014 ICMP still works",
+      "summary": "Overlay MTU must be underlay minus encapsulation. Same-node traffic never hits VXLAN.",
+      "time": "25 min",
+      "prereqs": [
+        "linux",
+        "kubernetes"
+      ],
+      "path": "scenarios/networking/22-vxlan-overlay-mtu.md"
+    },
+    {
+      "id": "net-23-dnssec-servfail",
+      "topic": "networking",
+      "level": "expert",
+      "kind": "drill",
+      "title": "dig @8.8.8.8 works, the office resolver returns SERVFAIL, the zone looks signed",
+      "summary": "SERVFAIL plus success with +cd is BOGUS until proven otherwise. Parent DS is outside your zone file.",
+      "time": "25 min",
+      "prereqs": [
+        "linux",
+        "dig"
+      ],
+      "path": "scenarios/networking/23-dnssec-servfail.md"
+    },
+    {
+      "id": "net-24-asymmetric-routing",
+      "topic": "networking",
+      "level": "expert",
+      "kind": "drill",
+      "title": "tcpdump sees SYN, SYN-ACK, then the client keeps retransmitting SYN",
+      "summary": "SYN-SENT vs SYN-RECV: both hosts are honest. Stateful firewalls and strict RPF need a symmetric path.",
+      "time": "25 min",
+      "prereqs": [
+        "linux",
+        "tcpdump"
+      ],
+      "path": "scenarios/networking/24-asymmetric-routing.md"
+    },
+    {
+      "id": "net-25-conntrack-nat-full",
+      "topic": "networking",
+      "level": "expert",
+      "kind": "drill",
+      "title": "New connections fail with timeout, established SSH sessions keep working",
+      "summary": "NEW vs ESTABLISHED split is a full NAT/conntrack table, not a WAN cut. Raise max and stop the leak.",
+      "time": "20 min",
+      "prereqs": [
+        "linux"
+      ],
+      "path": "scenarios/networking/25-conntrack-nat-full.md"
+    },
+    {
+      "id": "net-26-quic-udp-443-blocked",
+      "topic": "networking",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Chrome is instant, curl is instant, the mobile app hangs until it falls back to HTTP/2",
+      "summary": "HTTP/3 is UDP/443. Alt-Svc plus a TCP-only allowlist makes working HTTPS feel slow.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "curl"
+      ],
+      "path": "scenarios/networking/26-quic-udp-443-blocked.md"
+    },
+    {
+      "id": "net-27-happy-eyeballs-delay",
+      "topic": "networking",
+      "level": "expert",
+      "kind": "drill",
+      "title": "Dual-stack clients wait two seconds before every request; IPv4-only clients do not",
+      "summary": "A working A does not save you from a blackholed AAAA. Happy Eyeballs turns it into latency.",
+      "time": "20 min",
+      "prereqs": [
+        "linux",
+        "curl",
+        "dig"
+      ],
+      "path": "scenarios/networking/27-happy-eyeballs-delay.md"
+    },
+    {
+      "id": "net-28-rst-from-middlebox",
+      "topic": "networking",
+      "level": "expert",
+      "kind": "drill",
+      "title": "The server log has no request and the client got RST in the middle of TLS",
+      "summary": "TTL mismatch and an empty app log: the RST was injected. Two taps beat bouncing the JVM.",
+      "time": "25 min",
+      "prereqs": [
+        "linux",
+        "tcpdump"
+      ],
+      "path": "scenarios/networking/28-rst-from-middlebox.md"
+    },
+    {
+      "id": "net-29-anycast-broken-affinity",
+      "topic": "networking",
+      "level": "expert",
+      "kind": "drill",
+      "title": "DNS is anycast, some offices get a POP that still has yesterday's zone",
+      "summary": "One address, many machines. NSID tells you which POP; TCP on anycast resets on failover.",
+      "time": "25 min",
+      "prereqs": [
+        "linux",
+        "dig"
+      ],
+      "path": "scenarios/networking/29-anycast-broken-affinity.md"
+    },
+    {
+      "id": "net-30-nft-trace-datapath",
+      "topic": "networking",
+      "level": "expert",
+      "kind": "drill",
+      "title": "iptables -L is empty, nft list looks fine, packets still vanish",
+      "summary": "Empty iptables is not no firewall on nftables or eBPF. Trace the skb; name the datapath.",
+      "time": "25 min",
+      "prereqs": [
+        "linux",
+        "nftables"
+      ],
+      "path": "scenarios/networking/30-nft-trace-datapath.md"
+    }
+  ]
+}
