@@ -1,5 +1,9 @@
 # BreakFix Lab
 
+**Educational use only. Run exercises in isolated development environments, never in production. Some exercises may create billable cloud resources or modify files. Review commands before executing them.**
+
+
+
 A local, offline collection of DevOps scenarios that are **broken on purpose**.
 
 You get a task and files that look reasonable. They are not. You follow the
