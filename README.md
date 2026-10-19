@@ -189,3 +189,9 @@ Two rules keep the collection useful:
   else.
 - **The expected outcome must be checkable.** "It should work now" is not an outcome.
   Give the command and the output.
+
+## Disclaimer & Limitation of Liability
+
+All exercises, scripts, commands and configurations are provided solely for educational purposes and **at your own risk**. The author and contributors provide them without warranties and, to the fullest extent permitted by law, disclaim liability for damage, data loss, service disruption or costs arising from their use.
+
+Read the full [Disclaimer & Limitation of Liability](disclaimer.html) before running the exercises. Always work in an isolated, authorized test environment.

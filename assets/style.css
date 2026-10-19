@@ -281,3 +281,37 @@ body {
   .filters { gap: 16px; }
   .filter-group-right { margin-left: 0; }
 }
+
+
+/* ---------- safety notice, legal information and footer ---------- */
+.safety-notice {
+  margin: 24px 0;
+  padding: 14px 18px;
+  background: var(--amber-soft);
+  border: 1px solid rgba(227, 179, 65, .35);
+  border-radius: var(--radius);
+  color: var(--text-dim);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+.safety-notice strong { color: var(--amber); }
+.safety-notice a, .legal-page a, .site-footer a { color: var(--blue); text-underline-offset: 3px; }
+.safety-notice a:hover, .legal-page a:hover, .site-footer a:hover { color: var(--text); }
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 18px;
+  border-top: 1px solid var(--border-soft);
+  padding-top: 20px;
+  padding-bottom: 32px;
+  color: var(--text-faint);
+  font-size: 12.5px;
+}
+.legal-page { max-width: 840px; padding-top: 42px; padding-bottom: 56px; }
+.legal-page h1 { margin: 0 0 12px; font-size: 30px; line-height: 1.2; }
+.legal-page h2 { margin: 30px 0 8px; font-size: 18px; }
+.legal-page p, .legal-page li { color: var(--text-dim); }
+.legal-page li { margin-bottom: 12px; }
+.legal-page ol { padding-left: 25px; }
+.legal-lede { font-size: 16px; }
