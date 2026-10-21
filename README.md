@@ -36,6 +36,8 @@ php -S localhost:8080
 Your progress (which scenarios you marked solved) is stored in the browser's
 `localStorage`. Nothing leaves your machine.
 
+you can also go to: https://aviveldad.github.io/devops_scenarios/
+
 ## The loop
 
 ```
